@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
-import "MyERC20.sol";
-import "MyNFT.sol";
+import "./MyERC20.sol";
+import "./MyNFT.sol";
 
 contract NFTMarket {
     BaseERC20 public _supportedToken;
