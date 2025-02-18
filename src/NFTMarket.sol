@@ -46,27 +46,29 @@ contract NFTMarket {
         // _buy(msg.sender, bid, tokenId);
     }
 
-    function _transferNFT(address from, address to, uint256 tokenId) private {
+    function _transferNFT(address from, address to, uint256 tokenId) public {
         _nft.transferFrom(from, to, tokenId);
     }
 
-    function _payment(address nftSeller, uint256 price, address buyer, uint256 bid) private {
+    function _payment(address nftSeller, uint256 price, address buyer, uint256 bid) public {
         _supportedToken.transfer(nftSeller, price);
         if (bid > price) {
-            _supportedToken.transfer(msg.sender, (bid - price));
+            _supportedToken.transfer(buyer, (bid - price));
         }
     }
 
     function onErc20Received(address operator, address from, uint256 bid, bytes memory data) public returns (bool success) {
-        // uint256 tokenId = abi.decode(data, (uint256));
-        uint256 tokenId = 1;
+        uint256 tokenId = abi.decode(data, (uint256));
+        // uint256 tokenId = 1;
 
         require(tokenId > 0, "Invalid token ID");
 
-        Listing memory listing = _listings[tokenId];
-        require(listing.price > 0, "NFT is not listed for sale");
+        // Listing memory listing = _listings[tokenId];
+        // require(listing.price > 0, "NFT is not listed for sale");
+        // require(tokenId == uint256(1), "token Id not one");
+        require(_listings[tokenId].price > 0, "NFT is not listed for sale");
 
-        _buy(operator, tokenId, bid);
+        _buy(operator, bid, tokenId);
         return true;
     }
     function _buy(address buyer, uint256 bid, uint256 tokenId) private{

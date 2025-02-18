@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
+import {NFTMarket} from "MyNFTMarket.sol";
+
 contract BaseERC20 {
     string public name;
     string public symbol;
@@ -55,13 +57,16 @@ contract BaseERC20 {
         uint256 _amount,
         bytes memory _data
     ) private {
-        bytes memory payload =
-                            abi.encodeWithSignature("onErc20Received(address,address,uint256,bytes)", _msgSender, _from, _amount, _data);
-        (bool success, bytes memory resultBytes) = _to.call(payload);
-        //abi.decode(result, (bool))
-        bool result = abi.decode(resultBytes, (bool));
-        require(result, "onErc20Received: execution failed");
+        // onErc20Received(address operator, address from, uint256 bid, bytes memory data)
+        // bytes memory payload =
+        //     abi.encodeWithSignature("onErc20Received(address,address,uint256,bytes)", _msgSender, _from, _amount, _data);
+        // (bool success, bytes memory resultBytes) = _to.call(payload);
+
+        bool success = NFTMarket(_to).onErc20Received(_msgSender, _from, _amount, _data);
         require(success, "ERC20 check received failed");
+        //abi.decode(result, (bool))
+        // bool result = abi.decode(resultBytes, (bool));
+        // require(result, "onErc20Received: execution failed");
     }
 
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
