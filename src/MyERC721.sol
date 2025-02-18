@@ -182,7 +182,7 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
         );
 
         // to tokenId auth
-        // _approve(to, tokenId, _msgSender()) 
+        // _approve(to, tokenId, _msgSender())
 
         _approve(to, tokenId);
     }
