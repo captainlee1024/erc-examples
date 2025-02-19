@@ -20,6 +20,8 @@ contract NFTMarket {
 
     mapping(uint256 => Listing) public _listings;
 
+    event List(address indexed user, uint256 indexed tokenId, uint amount);
+
     function list(uint256 tokenId, uint256 price) public {
         require(tokenId > 0, "Invalid token ID");
         require(price > 0, "Invalid price");
@@ -27,6 +29,7 @@ contract NFTMarket {
         require(_listings[tokenId].owner == address(0), "NFT already listed");
 
         _listings[tokenId] = Listing(msg.sender, price);
+        emit List(_nft.ownerOf(tokenId), tokenId, price);
     }
 
     function buy(uint256 tokenId, uint256 bid) public {
