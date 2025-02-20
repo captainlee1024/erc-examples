@@ -11,4 +11,8 @@ contract Bank {
         balanceOf[msg.sender] += msg.value;
         emit Deposit(msg.sender, msg.value);
     }
+
+    function setUp() public {
+        balanceOf[msg.sender] += 1;
+    }
 }

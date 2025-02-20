@@ -12,14 +12,27 @@ contract NFTMarketTest is Test {
     MyNFT public nft;
 
     function setUp() public {
+        console.logAddress(msg.sender);
         erc20 = new BaseERC20();
+        console.logAddress(address(erc20));
         nft = new MyNFT("TerryNFT", "TNFT");
+        console.logAddress(address(nft));
         market = new NFTMarket(erc20, nft);
+        console.logAddress(address(market));
+        console.logAddress(address(vm));
+        console.logAddress(address(this));
     }
 
+    // 以test_list_should_works为例，理解foundry作弊码实现原理
+    // 运行forge test --mt test_list_should_works -vvv发生一次call调用
+    // sender和origin 是默认账户0x1804c8AB1F12E6bbf3894d4083f33e07309d1f38
     function test_list_should_works() public {
         address alice = makeAddr("alice");
+        // 发生第二次call调用, 调用nft合约
+        // sender是NFTMarketTest
         nft.mint(alice, "tokenURI");
+        // 发生第三次call调用，调用vm合约作弊码函数
+        // 虚拟机在执行该call时会在
         vm.prank(alice);
         vm.expectEmit(true, true, false, true);
         emit NFTMarket.List(alice, 1, 100);
