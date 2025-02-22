@@ -40,6 +40,25 @@ contract NFTMarketTest is Test {
         (address owner, uint256 price) = market._listings(1);
         assertEq(owner, alice);
         assertEq(price, 100);
+        // contract addr, mapping的slot, 和要查询的值的index
+
+        vm.startMappingRecording();
+        erc20.transfer(alice, 100);
+        erc20.transfer(address(market), 100);
+        bytes32 mappingSlot = bytes32(uint256(4));
+        bytes32  dataSlot1 = vm.getMappingSlotAt(address(erc20), mappingSlot, 0);
+        bytes32  dataSlot2 = vm.getMappingSlotAt(address(erc20), mappingSlot, 1);
+        bytes32  dataSlot3 = vm.getMappingSlotAt(address(erc20), mappingSlot, 2);
+
+        console.logUint(uint256(vm.terryGetStorageAt(address(erc20), dataSlot1)));
+        console.logString("Set new value: 999");
+        vm.terrySetStorageAt(address(erc20), dataSlot1, bytes32(uint256(999)));
+
+        console.logUint(uint256(vm.load(address(erc20), dataSlot1)));
+        console.logUint(uint256(vm.load(address(erc20), dataSlot2)));
+        console.logUint(uint256(vm.load(address(erc20), dataSlot3)));
+
+        vm.setArbitraryStorage(address(0));
     }
 
     function test_list_failed() public {
