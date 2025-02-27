@@ -1,0 +1,109 @@
+➜  ~/p*/op*/erc-examples ( master ✘ ) my-forge test --mt test_permit_buy -vvvv
+[⠊] Compiling...
+[⠒] Compiling 1 files with Solc 0.8.28
+[⠘] Solc 0.8.28 finished in 554.29ms
+Compiler run successful!
+[Terry Log] Decoded log: Before
+[Terry Log] Decoded log: bob addr: 0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e  balance:  1000
+[Terry Log] Decoded log: alice addr: 0x328809Bc894f92807417D2dAD6b7C998c1aFdac6  balance:  0
+[Terry Log] Decoded log: nft 1 owner:  0x328809Bc894f92807417D2dAD6b7C998c1aFdac6
+[Terry Log] Decoded log: After
+[Terry Log] Decoded log: bob addr: 0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e  balance:  900
+[Terry Log] Decoded log: alice addr: 0x328809Bc894f92807417D2dAD6b7C998c1aFdac6  balance:  100
+[Terry Log] Decoded log: nft 1 owner:  0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e
+
+Ran 1 test for test/TerryNFTMarketTest.t.sol:NFTMarketTest
+[PASS] test_permit_buy() (gas: 407697)
+Logs:
+  Before
+  bob addr: 0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e  balance:  1000
+  alice addr: 0x328809Bc894f92807417D2dAD6b7C998c1aFdac6  balance:  0
+  nft 1 owner:  0x328809Bc894f92807417D2dAD6b7C998c1aFdac6
+  After
+  bob addr: 0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e  balance:  900
+  alice addr: 0x328809Bc894f92807417D2dAD6b7C998c1aFdac6  balance:  100
+  nft 1 owner:  0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e
+
+Traces:
+  [467397] NFTMarketTest::test_permit_buy()
+    ├─ [30523] TToken::transfer(bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e], 1000)
+    │   ├─ emit Transfer(from: NFTMarketTest: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], to: bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e], value: 1000)
+    │   └─ ← [Return] true
+    ├─ [0] console::log("Before") [staticcall]
+    │   └─ ← [Stop]
+    ├─ [851] TToken::balanceOf(bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e]) [staticcall]
+    │   └─ ← [Return] 1000
+    ├─ [2851] TToken::balanceOf(alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] console::log("bob addr:", bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e], " balance: ", 1000) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [0] console::log("alice addr:", alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], " balance: ", 0) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [97088] MyNFT::mintNFT(alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], "tokenURI")
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], tokenId: 1)
+    │   ├─ emit MetadataUpdate(_tokenId: 1)
+    │   └─ ← [Return] 1
+    ├─ [1071] MyNFT::ownerOf(1) [staticcall]
+    │   └─ ← [Return] alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6]
+    ├─ [0] console::log("nft 1 owner: ", alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [0] VM::startPrank(alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6])
+    │   └─ ← [Return]
+    ├─ [25506] MyNFT::approve(NFTMarket: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 1)
+    │   ├─ emit Approval(owner: alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], approved: NFTMarket: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], tokenId: 1)
+    │   └─ ← [Stop]
+    ├─ [147234] NFTMarket::listNFTWithPolicy(1, 100, 1)
+    │   ├─ [1071] MyNFT::ownerOf(1) [staticcall]
+    │   │   └─ ← [Return] alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6]
+    │   ├─ [3242] MyNFT::isApprovedForAll(alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], NFTMarket: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a]) [staticcall]
+    │   │   └─ ← [Return] false
+    │   ├─ [1308] MyNFT::getApproved(1) [staticcall]
+    │   │   └─ ← [Return] NFTMarket: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a]
+    │   ├─ emit NFTListed(listingId: 1, tokenId: 1, seller: alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], price: 100)
+    │   └─ ← [Stop]
+    ├─ [0] VM::sign("<pk>", 0xdbfe6559be352a4379cff91cf797cfad7e4b5c5eb2d91d907f43612b106c16ef)
+    │   └─ ← [Return] 28, 0x5fc1535c30e1e6ed0e3bd4b36009c5b5ccf0d776a88957f7a1f27e027cbd87f6, 0x73c1bb1b5de24a38ea4c6042ec56e6ff36857702312b1a879b8ec3e7688658fd
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [0] VM::startPrank(bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e])
+    │   └─ ← [Return]
+    ├─ [25296] TToken::approve(NFTMarket: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 100)
+    │   ├─ emit Approval(owner: bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e], spender: NFTMarket: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], value: 100)
+    │   └─ ← [Return] true
+    ├─ [73568] NFTMarket::permitBuy(1, 28, 0x5fc1535c30e1e6ed0e3bd4b36009c5b5ccf0d776a88957f7a1f27e027cbd87f6, 0x73c1bb1b5de24a38ea4c6042ec56e6ff36857702312b1a879b8ec3e7688658fd)
+    │   ├─ [851] TToken::balanceOf(bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e]) [staticcall]
+    │   │   └─ ← [Return] 1000
+    │   ├─ [1223] TToken::allowance(bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e], NFTMarket: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a]) [staticcall]
+    │   │   └─ ← [Return] 100
+    │   ├─ [3000] PRECOMPILES::ecrecover(0xdbfe6559be352a4379cff91cf797cfad7e4b5c5eb2d91d907f43612b106c16ef, 28, 43311297429322332780940953144825954021218042285087326571347426455806508107766, 52358270434950406090379797120586810520752651041818173154000985377622643333373) [staticcall]
+    │   │   └─ ← [Return] 0x000000000000000000000000328809bc894f92807417d2dad6b7c998c1afdac6
+    │   ├─ [24814] TToken::transferFrom(bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e], alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], 100)
+    │   │   ├─ emit Transfer(from: bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e], to: alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], value: 100)
+    │   │   └─ ← [Return] true
+    │   ├─ [30339] MyNFT::safeTransferFrom(alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e], 1)
+    │   │   ├─ emit Transfer(from: alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], to: bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e], tokenId: 1)
+    │   │   └─ ← [Stop]
+    │   ├─ emit NFTPurchased(listingId: 1, tokenId: 1, buyer: bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e], price: 100)
+    │   └─ ← [Stop]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [0] console::log("After") [staticcall]
+    │   └─ ← [Stop]
+    ├─ [851] TToken::balanceOf(bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e]) [staticcall]
+    │   └─ ← [Return] 900
+    ├─ [0] console::log("bob addr:", bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e], " balance: ", 900) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [851] TToken::balanceOf(alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6]) [staticcall]
+    │   └─ ← [Return] 100
+    ├─ [0] console::log("alice addr:", alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], " balance: ", 100) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [1071] MyNFT::ownerOf(1) [staticcall]
+    │   └─ ← [Return] bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e]
+    ├─ [0] console::log("nft 1 owner: ", bob: [0x1D96F2f6BeF1202E4Ce1Ff6Dad0c2CB002861d3e]) [staticcall]
+    │   └─ ← [Stop]
+    └─ ← [Stop]
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 23.98ms (10.78ms CPU time)
+
+Ran 1 test suite in 2.67s (23.98ms CPU time): 1 tests passed, 0 failed, 0 skipped (1 total tests)
+
