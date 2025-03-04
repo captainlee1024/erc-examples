@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
@@ -15,7 +15,7 @@ contract MyNFT is ERC721URIStorage, Ownable {
         _tokenId += 1;
     }
 
-    constructor() ERC721("TerryNFT", "TNFT") Ownable(msg.sender) {
+    constructor() ERC721("TerryNFT", "TNFT") Ownable() {
     }
 
     // 铸造新的 NFT

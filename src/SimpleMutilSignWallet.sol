@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -30,7 +30,7 @@ contract MultiSigWallet is Ownable {
     event TransactionSigned(uint256 transactionId, address indexed signer);
     event TransactionExecuted(uint256 transactionId);
 
-    constructor(address _token, uint256 _requiredSignatures) Ownable(msg.sender) {
+    constructor(address _token, uint256 _requiredSignatures) Ownable() {
         token = IERC20(_token);
         requiredSignatures = _requiredSignatures;
     }

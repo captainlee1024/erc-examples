@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.17;
 
 import {Test, console} from "forge-std/Test.sol";
 import {NFTMarket} from "../src/TerryNFTMarket.sol";
 import {TToken} from "../src/TerryToken.sol";
 import {MyNFT} from "../src/TerryNFT.sol";
-import {MessageHashUtils} from "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
+//import {MessageHashUtils} from "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
+import {ECDSA} from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "forge-std/Vm.sol";
 
 
@@ -57,7 +58,7 @@ contract NFTMarketTest is Test {
         bytes32 PERMIT_TYPEHASH = keccak256("permitBuy(address owner, uint256 tokenId, address authorizedBuyer)");
         bytes32 structHash = keccak256(abi.encode(PERMIT_TYPEHASH, alice, 1, bob));
 
-        bytes32 hash = MessageHashUtils.toTypedDataHash(domainSeparator, structHash);
+        bytes32 hash = ECDSA.toTypedDataHash(domainSeparator, structHash);
 
         // sign
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(aliceWallet, hash);

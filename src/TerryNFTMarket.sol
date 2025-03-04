@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import {EIP712} from "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
+import {EIP712} from "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import {ECDSA} from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 
@@ -48,7 +48,7 @@ contract NFTMarket is Ownable, EIP712 {
     event NFTPurchased(uint256 indexed listingId, uint256 indexed tokenId, address buyer, uint256 price);
     event ListingCancelled(uint256 indexed listingId);
 
-    constructor(string memory _marketName, address _nftContract, address _paymentToken) Ownable(msg.sender) EIP712(_marketName, "1") {
+    constructor(string memory _marketName, address _nftContract, address _paymentToken) Ownable() EIP712(_marketName, "1") {
         marketName = _marketName;
         nftContract = IERC721(_nftContract);
         paymentToken = IERC20(_paymentToken);

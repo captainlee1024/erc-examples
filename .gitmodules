@@ -9,3 +9,9 @@
 [submodule "lib/permit2"]
 	path = lib/permit2
 	url = https://github.com/Uniswap/permit2
+[submodule "lib/solmate"]
+	path = lib/solmate
+	url = https://github.com/rari-capital/solmate
+[submodule "lib/forge-gas-snapshot"]
+	path = lib/forge-gas-snapshot
+	url = https://github.com/marktoda/forge-gas-snapshot
