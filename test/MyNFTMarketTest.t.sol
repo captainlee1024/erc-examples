@@ -50,9 +50,9 @@ contract NFTMarketTest is Test {
         bytes32 dataSlot2 = vm.getMappingSlotAt(address(erc20), mappingSlot, 1);
         bytes32 dataSlot3 = vm.getMappingSlotAt(address(erc20), mappingSlot, 2);
 
-//        console.logUint(uint256(vm.terryGetStorageAt(address(erc20), dataSlot1)));
-//        console.logString("Set new value: 999");
-//        vm.terrySetStorageAt(address(erc20), dataSlot1, bytes32(uint256(999)));
+        //        console.logUint(uint256(vm.terryGetStorageAt(address(erc20), dataSlot1)));
+        //        console.logString("Set new value: 999");
+        //        vm.terrySetStorageAt(address(erc20), dataSlot1, bytes32(uint256(999)));
 
         console.logUint(uint256(vm.load(address(erc20), dataSlot1)));
         console.logUint(uint256(vm.load(address(erc20), dataSlot2)));
