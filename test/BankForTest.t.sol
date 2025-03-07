@@ -43,10 +43,10 @@ contract BankTest is Test {
     function setUp() public {
         bank = new Bank();
     }
-//    function setUp(uint256 a) public returns(uint256) {return a;}
+    //    function setUp(uint256 a) public returns(uint256) {return a;}
 
     function test_Deposit() public {
-//        bank = new Bank();
+        //        bank = new Bank();
         bank.depositETH{value: 1000}();
         assertEq(bank.balanceOf(address(this)), 1000);
     }
@@ -83,9 +83,7 @@ contract BankTest is Test {
     function testFuzz_BalanceOf(uint256 x) public {
         x = bound(x, 10, type(uint256).max);
         vm.deal(address(this), x);
-        bank.depositETH{value: x/2}();
-        assertEq(bank.balanceOf(address(this)), x/2);
+        bank.depositETH{value: x / 2}();
+        assertEq(bank.balanceOf(address(this)), x / 2);
     }
-
-
 }

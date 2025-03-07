@@ -21,7 +21,7 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
     string private _symbol;
 
     // Token baseURI
-//    string private _baseURI;
+    //    string private _baseURI;
 
     // Mapping from token ID to owner address
     mapping(uint256 => address) private _owners;
@@ -34,56 +34,54 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
 
     // Mapping from owner to operator approvals
     mapping(address => mapping(address => bool)) private _operatorApprovals;
-//
-//    /**
-//     * @dev Emitted when `tokenId` token is transferred from `from` to `to`.
-//     */
-//    event Transfer(
-//        address indexed from,
-//        address indexed to,
-//        uint256 indexed tokenId
-//    );
-//
-//    /**
-//     * @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.
-//     */
-//    event Approval(
-//        address indexed owner,
-//        address indexed approved,
-//        uint256 indexed tokenId
-//    );
-//
-//    /**
-//     * @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.
-//     */
-//    event ApprovalForAll(
-//        address indexed owner,
-//        address indexed operator,
-//        bool approved
-//    );
+    //
+    //    /**
+    //     * @dev Emitted when `tokenId` token is transferred from `from` to `to`.
+    //     */
+    //    event Transfer(
+    //        address indexed from,
+    //        address indexed to,
+    //        uint256 indexed tokenId
+    //    );
+    //
+    //    /**
+    //     * @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.
+    //     */
+    //    event Approval(
+    //        address indexed owner,
+    //        address indexed approved,
+    //        uint256 indexed tokenId
+    //    );
+    //
+    //    /**
+    //     * @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.
+    //     */
+    //    event ApprovalForAll(
+    //        address indexed owner,
+    //        address indexed operator,
+    //        bool approved
+    //    );
 
     /**
      * @dev Initializes the contract by setting a `name`, a `symbol` and a `baseURI` to the token collection.
      */
-    constructor(
-        string memory name_,
-        string memory symbol_
-//        string memory baseURI_
-    ) {
+    constructor(string memory name_, string memory symbol_) 
+    //        string memory baseURI_
+    {
         _name = name_;
         _symbol = symbol_;
-//        _baseURI = baseURI_;
+        //        _baseURI = baseURI_;
     }
 
     /**
      * @dev See {IERC165-supportsInterface}.
      */
-//    function supportsInterface(bytes4 interfaceId) public pure returns (bool) {
-//        return
-//            interfaceId == 0x01ffc9a7 || // ERC165 Interface ID for ERC165
-//            interfaceId == 0x80ac58cd || // ERC165 Interface ID for ERC721
-//            interfaceId == 0x5b5e139f;   // ERC165 Interface ID for ERC721Metadata
-//    }
+    //    function supportsInterface(bytes4 interfaceId) public pure returns (bool) {
+    //        return
+    //            interfaceId == 0x01ffc9a7 || // ERC165 Interface ID for ERC165
+    //            interfaceId == 0x80ac58cd || // ERC165 Interface ID for ERC721
+    //            interfaceId == 0x5b5e139f;   // ERC165 Interface ID for ERC721Metadata
+    //    }
 
     /**
      * @dev See {IERC721Metadata-name}.
@@ -108,20 +106,13 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
         return "";
     }
 
-
     /**
      * @dev See {IERC721Metadata-tokenURI}.
      */
     function tokenURI(uint256 tokenId) public view virtual returns (string memory) {
-        require(
-            _owners[tokenId] != address(0),
-            "ERC721Metadata: URI query for nonexistent token"
-        );
+        require(_owners[tokenId] != address(0), "ERC721Metadata: URI query for nonexistent token");
 
-        require(
-            (bytes(_baseURI()).length > 0),
-            "invalid base URI"
-        );
+        require((bytes(_baseURI()).length > 0), "invalid base URI");
 
         return string.concat(_baseURI(), tokenId.toString());
 
@@ -141,8 +132,7 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
      * Emits a {Transfer} event.
      */
     function _mint(address to, uint256 tokenId) public {
-
-        require(to != address(0) , "ERC721: mint to the zero address");
+        require(to != address(0), "ERC721: mint to the zero address");
         require(_owners[tokenId] == address(0), "ERC721: token already minted");
 
         _owners[tokenId] = to;
@@ -175,11 +165,9 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
         address owner = ownerOf(tokenId);
         require(owner != to, "ERC721: approval to current owner");
 
-        bool isOwnerOrApprovedForAll = ((_owners[tokenId] == msg.sender) || isApprovedForAll(_owners[tokenId], msg.sender));
-        require(
-            isOwnerOrApprovedForAll,
-            "ERC721: approve caller is not owner nor approved for all"
-        );
+        bool isOwnerOrApprovedForAll =
+            ((_owners[tokenId] == msg.sender) || isApprovedForAll(_owners[tokenId], msg.sender));
+        require(isOwnerOrApprovedForAll, "ERC721: approve caller is not owner nor approved for all");
 
         // to tokenId auth
         // _approve(to, tokenId, _msgSender())
@@ -191,10 +179,7 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
      * @dev See {IERC721-getApproved}.
      */
     function getApproved(uint256 tokenId) public view returns (address) {
-        require(
-            _owners[tokenId] != address(0),
-            "ERC721: approved query for nonexistent token"
-        );
+        require(_owners[tokenId] != address(0), "ERC721: approved query for nonexistent token");
 
         address spender = _tokenApprovals[tokenId];
         return spender;
@@ -215,10 +200,7 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
     /**
      * @dev See {IERC721-isApprovedForAll}.
      */
-    function isApprovedForAll(
-        address owner,
-        address operator
-    ) public view returns (bool) {
+    function isApprovedForAll(address owner, address operator) public view returns (bool) {
         return _operatorApprovals[owner][operator];
     }
 
@@ -226,10 +208,7 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
      * @dev See {IERC721-transferFrom}.
      */
     function transferFrom(address from, address to, uint256 tokenId) public {
-        require(
-            _isApprovedOrOwner(msg.sender, tokenId),
-            "ERC721: transfer caller is not owner nor approved"
-        );
+        require(_isApprovedOrOwner(msg.sender, tokenId), "ERC721: transfer caller is not owner nor approved");
 
         _transfer(from, to, tokenId);
     }
@@ -237,27 +216,15 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
     /**
      * @dev See {IERC721-safeTransferFrom}.
      */
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 tokenId
-    ) public {
+    function safeTransferFrom(address from, address to, uint256 tokenId) public {
         safeTransferFrom(from, to, tokenId, "");
     }
 
     /**
      * @dev See {IERC721-safeTransferFrom}.
      */
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 tokenId,
-        bytes memory _data
-    ) public {
-        require(
-            _isApprovedOrOwner(msg.sender, tokenId),
-            "ERC721: transfer caller is not owner nor approved"
-        );
+    function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory _data) public {
+        require(_isApprovedOrOwner(msg.sender, tokenId), "ERC721: transfer caller is not owner nor approved");
         _safeTransfer(from, to, tokenId, _data);
     }
 
@@ -279,17 +246,9 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
      *
      * Emits a {Transfer} event.
      */
-    function _safeTransfer(
-        address from,
-        address to,
-        uint256 tokenId,
-        bytes memory _data
-    ) internal {
+    function _safeTransfer(address from, address to, uint256 tokenId, bytes memory _data) internal {
         _transfer(from, to, tokenId);
-        require(
-            _checkOnERC721Received(from, to, tokenId, _data),
-            "ERC721: transfer to non ERC721Receiver implementer"
-        );
+        require(_checkOnERC721Received(from, to, tokenId, _data), "ERC721: transfer to non ERC721Receiver implementer");
     }
 
     /**
@@ -301,7 +260,9 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
      * and stop existing when they are burned (`_burn`).
      */
     function _exists(uint256 tokenId) internal view returns (bool) {
-        /**code*/
+        /**
+         * code
+         */
         return (_owners[tokenId] != address(0));
     }
 
@@ -312,19 +273,18 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
      *
      * - `tokenId` must exist.
      */
-    function _isApprovedOrOwner(
-        address spender,
-        uint256 tokenId
-    ) internal view returns (bool) {
-        require(
-            _owners[tokenId] != address(0),
-            "ERC721: operator query for nonexistent token"
-        );
+    function _isApprovedOrOwner(address spender, uint256 tokenId) internal view returns (bool) {
+        require(_owners[tokenId] != address(0), "ERC721: operator query for nonexistent token");
 
-        /**code*/
+        /**
+         * code
+         */
         // return (_owners[tokenId] == msg.sender) || (_tokenApprovals[tokenId] == spender) || isApprovedForAll(_owners[tokenId], msg.sender);
         // return (_owners[tokenId] == msg.sender) || isApprovedForAll(_owners[tokenId], msg.sender);
-        return (_owners[tokenId] == spender || isApprovedForAll(_owners[tokenId], spender) || (_tokenApprovals[tokenId] == spender));
+        return (
+            _owners[tokenId] == spender || isApprovedForAll(_owners[tokenId], spender)
+                || (_tokenApprovals[tokenId] == spender)
+        );
     }
 
     /**
@@ -380,27 +340,16 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
      * @param _data bytes optional data to send along with the call
      * @return bool whether the call correctly returned the expected magic value
      */
-    function _checkOnERC721Received(
-        address from,
-        address to,
-        uint256 tokenId,
-        bytes memory _data
-    ) private returns (bool) {
+    function _checkOnERC721Received(address from, address to, uint256 tokenId, bytes memory _data)
+        private
+        returns (bool)
+    {
         if (isContract(to)) {
-            try
-            IERC721Receiver(to).onERC721Received(
-                msg.sender,
-                from,
-                tokenId,
-                _data
-            )
-            returns (bytes4 retval) {
+            try IERC721Receiver(to).onERC721Received(msg.sender, from, tokenId, _data) returns (bytes4 retval) {
                 return retval == IERC721Receiver.onERC721Received.selector;
             } catch (bytes memory reason) {
                 if (reason.length == 0) {
-                    revert(
-                        "ERC721: transfer to non ERC721Receiver implementer"
-                    );
+                    revert("ERC721: transfer to non ERC721Receiver implementer");
                 } else {
                     assembly {
                         revert(add(32, reason), mload(reason))
@@ -417,26 +366,24 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
     }
 
     /**
- * @dev See {IERC165-supportsInterface}.
+     * @dev See {IERC165-supportsInterface}.
      */
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
-        return
-            interfaceId == type(IERC721).interfaceId ||
-            interfaceId == type(IERC721Metadata).interfaceId ||
-            super.supportsInterface(interfaceId);
+        return interfaceId == type(IERC721).interfaceId || interfaceId == type(IERC721Metadata).interfaceId
+            || super.supportsInterface(interfaceId);
     }
 
     /**
- * @dev Reverts if the `tokenId` doesn't have a current owner (it hasn't been minted, or it has been burned).
+     * @dev Reverts if the `tokenId` doesn't have a current owner (it hasn't been minted, or it has been burned).
      * Returns the owner.
      *
      * Overrides to ownership logic should be done to {_ownerOf}.
      */
     function _requireOwned(uint256 tokenId) internal view returns (address) {
         address owner = _ownerOf(tokenId);
-//        if (owner == address(0)) {
-//            revert ERC721NonexistentToken(tokenId);
-//        }
+        //        if (owner == address(0)) {
+        //            revert ERC721NonexistentToken(tokenId);
+        //        }
         require(owner != address(0), "ERC721: owner query for nonexistent token");
         return owner;
     }
@@ -449,12 +396,7 @@ abstract contract BaseERC721 is ERC165, IERC721, IERC721Metadata {
 contract BaseERC721Receiver is IERC721Receiver {
     constructor() {}
 
-    function onERC721Received(
-        address,
-        address,
-        uint256,
-        bytes calldata
-    ) external pure returns (bytes4) {
+    function onERC721Received(address, address, uint256, bytes calldata) external pure returns (bytes4) {
         return this.onERC721Received.selector;
     }
 }

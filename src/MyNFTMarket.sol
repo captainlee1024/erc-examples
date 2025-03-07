@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
+
 import "./MyERC20.sol";
 import "./MyNFT.sol";
 
@@ -8,6 +9,7 @@ contract NFTMarket {
 
     MyNFT public _nft;
     // supported all nft
+
     constructor(BaseERC20 _erc20, MyNFT _erc721) {
         _supportedToken = _erc20;
         _nft = _erc721;
@@ -20,7 +22,7 @@ contract NFTMarket {
 
     mapping(uint256 => Listing) public _listings;
 
-    event List(address indexed user, uint256 indexed tokenId, uint amount);
+    event List(address indexed user, uint256 indexed tokenId, uint256 amount);
 
     function list(uint256 tokenId, uint256 price) public {
         require(tokenId > 0, "Invalid token ID");
@@ -60,7 +62,10 @@ contract NFTMarket {
         }
     }
 
-    function onErc20Received(address operator, address from, uint256 bid, bytes memory data) public returns (bool success) {
+    function onErc20Received(address operator, address from, uint256 bid, bytes memory data)
+        public
+        returns (bool success)
+    {
         uint256 tokenId = abi.decode(data, (uint256));
         // uint256 tokenId = 1;
 
@@ -74,7 +79,8 @@ contract NFTMarket {
         _buy(operator, bid, tokenId);
         return true;
     }
-    function _buy(address buyer, uint256 bid, uint256 tokenId) private{
+
+    function _buy(address buyer, uint256 bid, uint256 tokenId) private {
         require(bid >= _listings[tokenId].price, "Insufficient payment");
         require(_listings[tokenId].owner != address(0), "NFT not listed");
 

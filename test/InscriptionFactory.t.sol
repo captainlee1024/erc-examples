@@ -6,7 +6,7 @@ import "../src/InscriptionCloneFactory.sol";
 import "../src/Inscription.sol";
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 
-contract InscriptionCloneFactoryTest is Test{
+contract InscriptionCloneFactoryTest is Test {
     InscriptionCloneFactory factory;
     Inscription impl;
     address owner = address(0x123);
@@ -50,7 +50,6 @@ contract InscriptionCloneFactoryTest is Test{
         inscription.initialize("TestToken", "TEST", 1000e18, 10e18, 0.1 ether);
     }
 
-
     // 测试 mintInscription 是否成功，并且费用是否按比例分账
     function testMintInscription() public {
         // 部署代理
@@ -60,7 +59,7 @@ contract InscriptionCloneFactoryTest is Test{
         // 记录初始余额
         uint256 implOwnerBalanceBefore = owner.balance; // _implOwner 是 owner
         uint256 proxyOwnerBalanceBefore = user.balance; // 代理拥有者是 user
-//        uint256 userBalanceBefore = user.balance;
+        //        uint256 userBalanceBefore = user.balance;
         uint256 user2BalanceBefore = user2.balance; // 去mint
 
         // 用户调用 mintInscription，发送 2 ETH
@@ -76,7 +75,6 @@ contract InscriptionCloneFactoryTest is Test{
         assertEq(user.balance, proxyOwnerBalanceBefore + 0.5 ether); // user即proxy owner 分得 0.5 ETH
         assertEq(user2.balance, user2BalanceBefore - 2 ether + 1 ether); // 用户发送 2 ETH，退回 1 ETH
     }
-
 
     // 测试 mintInscription 超过totalSupply失败
     function testMintExceedsSupply() public {
@@ -123,6 +121,4 @@ contract InscriptionCloneFactoryTest is Test{
         vm.expectRevert("Must send some ETH");
         factory.mintInscription(proxy);
     }
-
-
 }

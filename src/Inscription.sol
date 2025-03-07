@@ -5,16 +5,16 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 
-
-contract Inscription is ERC20Permit, Ownable, Initializable{
+contract Inscription is ERC20Permit, Ownable, Initializable {
     // 单次发行量
     uint256 private _perMint;
     // 单个代币铸造费用
     uint256 private _price;
     uint256 private _currentSupply;
     string private _name;
-    string private _symbol;      // 自定义符号
+    string private _symbol; // 自定义符号
     uint256 private _totalSupply; // 自定义最大供应量
+
     constructor(string memory name_, string memory symbol_)
         ERC20(name_, symbol_)
         ERC20Permit(name_)
@@ -23,14 +23,20 @@ contract Inscription is ERC20Permit, Ownable, Initializable{
         _disableInitializers();
     }
 
-    function  sendEther(address payable recipient) external payable onlyOwner {
+    function sendEther(address payable recipient) external payable onlyOwner {
         require(address(this).balance >= msg.value, "Insufficient balance");
-        (bool success, ) = recipient.call{value: msg.value}("");
+        (bool success,) = recipient.call{value: msg.value}("");
         require(success, "Call failed");
     }
 
     // symbol_ 铭文名称
-    function initialize(string memory name_, string memory symbol_, uint256 totalSupply_, uint256 perMint_, uint256 price_) initializer public {
+    function initialize(
+        string memory name_,
+        string memory symbol_,
+        uint256 totalSupply_,
+        uint256 perMint_,
+        uint256 price_
+    ) public initializer {
         _name = name_;
         _symbol = symbol_;
         _totalSupply = totalSupply_;
@@ -40,7 +46,7 @@ contract Inscription is ERC20Permit, Ownable, Initializable{
 
     function mintInscription(address receiver) public payable {
         require((_currentSupply + _perMint) <= _totalSupply, "Exceeds total supply");
-       _mint(receiver, _perMint) ;
+        _mint(receiver, _perMint);
         _currentSupply += _perMint;
     }
 
@@ -52,18 +58,18 @@ contract Inscription is ERC20Permit, Ownable, Initializable{
     /**
      * @dev See {IERC20-totalSupply}.
      */
-    function totalSupply() public view override virtual returns (uint256) {
+    function totalSupply() public view virtual override returns (uint256) {
         return _totalSupply;
     }
 
     /**
-    * @dev Returns the name of the token.
+     * @dev Returns the name of the token.
      */
-    function name() public view override virtual returns (string memory) {
+    function name() public view virtual override returns (string memory) {
         return _name;
     }
 
-    function circulatingSupply() public view returns(uint256){
+    function circulatingSupply() public view returns (uint256) {
         return _currentSupply;
     }
 

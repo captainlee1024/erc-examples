@@ -46,9 +46,9 @@ contract NFTMarketTest is Test {
         erc20.transfer(alice, 100);
         erc20.transfer(address(market), 100);
         bytes32 mappingSlot = bytes32(uint256(4));
-        bytes32  dataSlot1 = vm.getMappingSlotAt(address(erc20), mappingSlot, 0);
-        bytes32  dataSlot2 = vm.getMappingSlotAt(address(erc20), mappingSlot, 1);
-        bytes32  dataSlot3 = vm.getMappingSlotAt(address(erc20), mappingSlot, 2);
+        bytes32 dataSlot1 = vm.getMappingSlotAt(address(erc20), mappingSlot, 0);
+        bytes32 dataSlot2 = vm.getMappingSlotAt(address(erc20), mappingSlot, 1);
+        bytes32 dataSlot3 = vm.getMappingSlotAt(address(erc20), mappingSlot, 2);
 
         console.logUint(uint256(vm.terryGetStorageAt(address(erc20), dataSlot1)));
         console.logString("Set new value: 999");
@@ -98,8 +98,6 @@ contract NFTMarketTest is Test {
         market.list(2, 200);
         vm.stopPrank();
 
-
-
         // approve
         vm.startPrank(bob);
         erc20.approve(address(market), 200);
@@ -131,7 +129,7 @@ contract NFTMarketTest is Test {
 
     function testFuzz_market(address buyer, uint256 price) public {
         assumeNotZeroAddress(buyer);
-        price = bound(price, 1 * 10 ** (erc20.decimals()-2), 1000 * 10 ** erc20.decimals());
+        price = bound(price, 1 * 10 ** (erc20.decimals() - 2), 1000 * 10 ** erc20.decimals());
         address alice = makeAddr("alice");
 
         // mint and list use fuzzy price

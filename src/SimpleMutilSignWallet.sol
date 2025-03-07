@@ -89,18 +89,19 @@ contract MultiSigWallet is Ownable {
     // 提交交易（ERC-20 转账）
     function submitTransaction(address to, uint256 value) public onlySigner {
         uint256 transactionId = transactions.length;
-        transactions.push(Transaction({
-            to: to,
-            value: value,
-            signatures: 0,
-            executed: false
-        }));
+        transactions.push(Transaction({to: to, value: value, signatures: 0, executed: false}));
 
         emit TransactionSubmitted(transactionId, to, value);
     }
 
     // 签署交易
-    function signTransaction(uint256 transactionId) public onlySigner transactionExists(transactionId) notExecuted(transactionId) notSigned(transactionId) {
+    function signTransaction(uint256 transactionId)
+        public
+        onlySigner
+        transactionExists(transactionId)
+        notExecuted(transactionId)
+        notSigned(transactionId)
+    {
         transactions[transactionId].signatures++;
 
         emit TransactionSigned(transactionId, msg.sender);
@@ -112,7 +113,11 @@ contract MultiSigWallet is Ownable {
     }
 
     // 执行交易
-    function executeTransaction(uint256 transactionId) public transactionExists(transactionId) notExecuted(transactionId) {
+    function executeTransaction(uint256 transactionId)
+        public
+        transactionExists(transactionId)
+        notExecuted(transactionId)
+    {
         require(transactions[transactionId].signatures >= requiredSignatures, "Not enough signatures");
 
         transactions[transactionId].executed = true;

@@ -8,8 +8,6 @@ import {MyNFT} from "../src/TerryNFT.sol";
 import {MessageHashUtils} from "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
 import "forge-std/Vm.sol";
 
-
-
 contract NFTMarketTest is Test {
     NFTMarket public market;
     TToken public erc20;
@@ -43,15 +41,17 @@ contract NFTMarketTest is Test {
         // prove and list
         vm.startPrank(alice);
         nft.approve(address(market), 1);
-        NFTMarket.Policy  policy = NFTMarket.Policy.permitWhitelist;
+        NFTMarket.Policy policy = NFTMarket.Policy.permitWhitelist;
         market.listNFTWithPolicy(1, 100, policy);
 
         // sign EIP712 typed data
         // domain
         bytes32 hashdName = keccak256(bytes("TNFTMarket"));
         bytes32 hashdVersion = keccak256(bytes("1"));
-        bytes32 EIP712TypeHash = keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
-        bytes32 domainSeparator = keccak256(abi.encode(EIP712TypeHash, hashdName, hashdVersion, block.chainid, address(market)));
+        bytes32 EIP712TypeHash =
+            keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
+        bytes32 domainSeparator =
+            keccak256(abi.encode(EIP712TypeHash, hashdName, hashdVersion, block.chainid, address(market)));
 
         // permitBuy
         bytes32 PERMIT_TYPEHASH = keccak256("permitBuy(address owner, uint256 tokenId, address authorizedBuyer)");
@@ -73,6 +73,5 @@ contract NFTMarketTest is Test {
         console.log("bob addr:", bob, " balance: ", erc20.balanceOf(bob));
         console.log("alice addr:", alice, " balance: ", erc20.balanceOf(alice));
         console.log("nft 1 owner: ", nft.ownerOf(1));
-
     }
 }

@@ -18,7 +18,7 @@ contract MyNFT is IERC4906, BaseERC721 {
     bytes4 private constant ERC4906_INTERFACE_ID = bytes4(0x49064906);
 
     /**
-    * @dev See {IERC165-supportsInterface}
+     * @dev See {IERC165-supportsInterface}
      */
     function supportsInterface(bytes4 interfaceId) public view virtual override(BaseERC721, IERC165) returns (bool) {
         return interfaceId == ERC4906_INTERFACE_ID || super.supportsInterface(interfaceId);
@@ -52,11 +52,10 @@ contract MyNFT is IERC4906, BaseERC721 {
         emit MetadataUpdate(tokenId);
     }
 
-
     string private _baseTokenURI;
 
     function _baseURI() internal view virtual override returns (string memory) {
-//    function _baseURI() internal view virtual returns (string memory) {
+        //    function _baseURI() internal view virtual returns (string memory) {
 
         return _baseTokenURI;
     }

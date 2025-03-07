@@ -50,13 +50,9 @@ contract BaseERC20 {
         return true;
     }
 
-    function _checkOnErc20Received(
-        address _msgSender,
-        address _from,
-        address _to,
-        uint256 _amount,
-        bytes memory _data
-    ) private {
+    function _checkOnErc20Received(address _msgSender, address _from, address _to, uint256 _amount, bytes memory _data)
+        private
+    {
         // onErc20Received(address operator, address from, uint256 bid, bytes memory data)
         // bytes memory payload =
         //     abi.encodeWithSignature("onErc20Received(address,address,uint256,bytes)", _msgSender, _from, _amount, _data);

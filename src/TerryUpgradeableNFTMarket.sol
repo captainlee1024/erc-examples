@@ -17,6 +17,7 @@ contract TerryUpgradeableNFTMarket is Initializable, OwnableUpgradeable, EIP712U
     IERC20 public _paymentToken;
     IERC721 public _nft;
     uint256 private _listingIds;
+
     function incrementListingId() internal {
         _listingIds++;
     }
@@ -27,14 +28,18 @@ contract TerryUpgradeableNFTMarket is Initializable, OwnableUpgradeable, EIP712U
 
     struct Listing {
         uint256 listingId; // 唯一标识
-        uint256 tokenId;   // NFT 的 tokenId
-        address seller;    // 卖家地址
-        uint256 price;     // 价格（以 ERC-20 代币计）
-        bool active;       // 是否仍在出售
-        Policy policy;      // 是否需要通过离线白名单接口购买
+        uint256 tokenId; // NFT 的 tokenId
+        address seller; // 卖家地址
+        uint256 price; // 价格（以 ERC-20 代币计）
+        bool active; // 是否仍在出售
+        Policy policy; // 是否需要通过离线白名单接口购买
     }
 
-    enum Policy { normal, permitWhitelist }
+    enum Policy {
+        normal,
+        permitWhitelist
+    }
+
     mapping(uint256 => Listing) public listings; // listingId 到 Listing 的映射
 
     event NFTListed(uint256 indexed listingId, uint256 indexed tokenId, address seller, uint256 price);
@@ -46,12 +51,17 @@ contract TerryUpgradeableNFTMarket is Initializable, OwnableUpgradeable, EIP712U
      */
     error ERC2612InvalidSigner(address signer, address owner);
 
-    bytes32 private constant PERMIT_TYPEHASH = keccak256("permitBuy(address owner, uint256 tokenId, address authorizedBuyer)");
+    bytes32 private constant PERMIT_TYPEHASH =
+        keccak256("permitBuy(address owner, uint256 tokenId, address authorizedBuyer)");
 
     constructor() {
         _disableInitializers();
     }
-    function initialize(string memory marketName_, address paymentToken_, address nft_, address owner) initializer public {
+
+    function initialize(string memory marketName_, address paymentToken_, address nft_, address owner)
+        public
+        initializer
+    {
         _marketName = marketName_;
         _paymentToken = IERC20(paymentToken_);
         _nft = IERC721(nft_);
@@ -70,9 +80,10 @@ contract TerryUpgradeableNFTMarket is Initializable, OwnableUpgradeable, EIP712U
     function listNFTWithPolicy(uint256 tokenId, uint256 price, Policy policy) external {
         require(price > 0, "Price must be greater than zero");
         require(_nft.ownerOf(tokenId) == msg.sender, "You must own the NFT");
-        require(_nft.isApprovedForAll(msg.sender, address(this)) ||
-        _nft.getApproved(tokenId) == address(this),
-            "Market must be approved to transfer NFT");
+        require(
+            _nft.isApprovedForAll(msg.sender, address(this)) || _nft.getApproved(tokenId) == address(this),
+            "Market must be approved to transfer NFT"
+        );
 
         incrementListingId();
         uint256 listingId = currentListingId();
@@ -95,12 +106,13 @@ contract TerryUpgradeableNFTMarket is Initializable, OwnableUpgradeable, EIP712U
         require(listing.policy == Policy.normal, "Offchain signature authorization is required");
         require(listing.active, "Listing is not active");
         require(_paymentToken.balanceOf(msg.sender) >= listing.price, "Insufficient ERC-20 balance");
-        require(_paymentToken.allowance(msg.sender, address(this)) >= listing.price,
-            "Market must be approved to spend ERC-20 tokens");
+        require(
+            _paymentToken.allowance(msg.sender, address(this)) >= listing.price,
+            "Market must be approved to spend ERC-20 tokens"
+        );
 
         // 转移 ERC-20 代币给卖家
-        require(_paymentToken.transferFrom(msg.sender, listing.seller, listing.price),
-            "ERC-20 transfer failed");
+        require(_paymentToken.transferFrom(msg.sender, listing.seller, listing.price), "ERC-20 transfer failed");
 
         // 转移 NFT 给买家
         _nft.safeTransferFrom(listing.seller, msg.sender, listing.tokenId);
@@ -136,8 +148,10 @@ contract TerryUpgradeableNFTMarket is Initializable, OwnableUpgradeable, EIP712U
         require(listing.policy == Policy.permitWhitelist, "Offchain signature authorization is not required");
         require(listing.active, "Listing is not active");
         require(_paymentToken.balanceOf(msg.sender) >= listing.price, "Insufficient ERC-20 balance");
-        require(_paymentToken.allowance(msg.sender, address(this)) >= listing.price,
-            "Market must be approved to spend ERC-20 tokens");
+        require(
+            _paymentToken.allowance(msg.sender, address(this)) >= listing.price,
+            "Market must be approved to spend ERC-20 tokens"
+        );
 
         // 根据标准获取Hash
         bytes32 structHash = keccak256(abi.encode(PERMIT_TYPEHASH, listing.seller, listing.tokenId, msg.sender));
@@ -149,8 +163,7 @@ contract TerryUpgradeableNFTMarket is Initializable, OwnableUpgradeable, EIP712U
         }
 
         // 转移 ERC-20 代币给卖家
-        require(_paymentToken.transferFrom(msg.sender, listing.seller, listing.price),
-            "ERC-20 transfer failed");
+        require(_paymentToken.transferFrom(msg.sender, listing.seller, listing.price), "ERC-20 transfer failed");
 
         // 转移 NFT 给买家
         _nft.safeTransferFrom(listing.seller, msg.sender, listing.tokenId);

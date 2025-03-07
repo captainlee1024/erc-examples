@@ -7,7 +7,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import {EIP712} from "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 import {ECDSA} from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
-
 contract NFTMarket is Ownable, EIP712 {
     string public marketName;
 
@@ -16,11 +15,13 @@ contract NFTMarket is Ownable, EIP712 {
      */
     error ERC2612InvalidSigner(address signer, address owner);
 
-    bytes32 private constant PERMIT_TYPEHASH = keccak256("permitBuy(address owner, uint256 tokenId, address authorizedBuyer)");
+    bytes32 private constant PERMIT_TYPEHASH =
+        keccak256("permitBuy(address owner, uint256 tokenId, address authorizedBuyer)");
 
     // 上架ID 自增
     uint256 private _listingIds;
-    function currentListingId() public view returns(uint256) {
+
+    function currentListingId() public view returns (uint256) {
         return _listingIds;
     }
 
@@ -33,14 +34,17 @@ contract NFTMarket is Ownable, EIP712 {
 
     struct Listing {
         uint256 listingId; // 唯一标识
-        uint256 tokenId;   // NFT 的 tokenId
-        address seller;    // 卖家地址
-        uint256 price;     // 价格（以 ERC-20 代币计）
-        bool active;       // 是否仍在出售
-        Policy policy;      // 是否需要通过离线白名单接口购买
+        uint256 tokenId; // NFT 的 tokenId
+        address seller; // 卖家地址
+        uint256 price; // 价格（以 ERC-20 代币计）
+        bool active; // 是否仍在出售
+        Policy policy; // 是否需要通过离线白名单接口购买
     }
 
-    enum Policy { normal, permitWhitelist }
+    enum Policy {
+        normal,
+        permitWhitelist
+    }
 
     mapping(uint256 => Listing) public listings; // listingId 到 Listing 的映射
 
@@ -48,7 +52,10 @@ contract NFTMarket is Ownable, EIP712 {
     event NFTPurchased(uint256 indexed listingId, uint256 indexed tokenId, address buyer, uint256 price);
     event ListingCancelled(uint256 indexed listingId);
 
-    constructor(string memory _marketName, address _nftContract, address _paymentToken) Ownable(msg.sender) EIP712(_marketName, "1") {
+    constructor(string memory _marketName, address _nftContract, address _paymentToken)
+        Ownable(msg.sender)
+        EIP712(_marketName, "1")
+    {
         marketName = _marketName;
         nftContract = IERC721(_nftContract);
         paymentToken = IERC20(_paymentToken);
@@ -58,9 +65,10 @@ contract NFTMarket is Ownable, EIP712 {
     function listNFTWithPolicy(uint256 tokenId, uint256 price, Policy policy) external {
         require(price > 0, "Price must be greater than zero");
         require(nftContract.ownerOf(tokenId) == msg.sender, "You must own the NFT");
-        require(nftContract.isApprovedForAll(msg.sender, address(this)) ||
-        nftContract.getApproved(tokenId) == address(this),
-            "Market must be approved to transfer NFT");
+        require(
+            nftContract.isApprovedForAll(msg.sender, address(this)) || nftContract.getApproved(tokenId) == address(this),
+            "Market must be approved to transfer NFT"
+        );
 
         incrementListingId();
         uint256 listingId = currentListingId();
@@ -83,12 +91,13 @@ contract NFTMarket is Ownable, EIP712 {
         require(listing.policy == Policy.normal, "Offchain signature authorization is required");
         require(listing.active, "Listing is not active");
         require(paymentToken.balanceOf(msg.sender) >= listing.price, "Insufficient ERC-20 balance");
-        require(paymentToken.allowance(msg.sender, address(this)) >= listing.price,
-            "Market must be approved to spend ERC-20 tokens");
+        require(
+            paymentToken.allowance(msg.sender, address(this)) >= listing.price,
+            "Market must be approved to spend ERC-20 tokens"
+        );
 
         // 转移 ERC-20 代币给卖家
-        require(paymentToken.transferFrom(msg.sender, listing.seller, listing.price),
-            "ERC-20 transfer failed");
+        require(paymentToken.transferFrom(msg.sender, listing.seller, listing.price), "ERC-20 transfer failed");
 
         // 转移 NFT 给买家
         nftContract.safeTransferFrom(listing.seller, msg.sender, listing.tokenId);
@@ -124,8 +133,10 @@ contract NFTMarket is Ownable, EIP712 {
         require(listing.policy == Policy.permitWhitelist, "Offchain signature authorization is not required");
         require(listing.active, "Listing is not active");
         require(paymentToken.balanceOf(msg.sender) >= listing.price, "Insufficient ERC-20 balance");
-        require(paymentToken.allowance(msg.sender, address(this)) >= listing.price,
-            "Market must be approved to spend ERC-20 tokens");
+        require(
+            paymentToken.allowance(msg.sender, address(this)) >= listing.price,
+            "Market must be approved to spend ERC-20 tokens"
+        );
 
         // 根据标准获取Hash
         bytes32 structHash = keccak256(abi.encode(PERMIT_TYPEHASH, listing.seller, listing.tokenId, msg.sender));
@@ -137,8 +148,7 @@ contract NFTMarket is Ownable, EIP712 {
         }
 
         // 转移 ERC-20 代币给卖家
-        require(paymentToken.transferFrom(msg.sender, listing.seller, listing.price),
-            "ERC-20 transfer failed");
+        require(paymentToken.transferFrom(msg.sender, listing.seller, listing.price), "ERC-20 transfer failed");
 
         // 转移 NFT 给买家
         nftContract.safeTransferFrom(listing.seller, msg.sender, listing.tokenId);

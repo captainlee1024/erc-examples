@@ -9,6 +9,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 /// @custom:oz-upgrades-from TNFTUpgradeable
 contract TNFTUpgradeable is Initializable, ERC721URIStorageUpgradeable, OwnableUpgradeable, UUPSUpgradeable {
     uint256 private _tokenId;
+
     function incrementTokenId() internal {
         _tokenId++;
     }
@@ -21,14 +22,14 @@ contract TNFTUpgradeable is Initializable, ERC721URIStorageUpgradeable, OwnableU
         _disableInitializers();
     }
 
-    function initialize(string memory name_, string memory symbol_, address owner_) initializer public {
+    function initialize(string memory name_, string memory symbol_, address owner_) public initializer {
         __ERC721URIStorage_init();
         __ERC721_init(name_, symbol_);
         __Ownable_init(owner_);
         __UUPSUpgradeable_init();
     }
 
-    function mintNFT(address recipient, string memory tokenURI) onlyOwner public returns (uint256) {
+    function mintNFT(address recipient, string memory tokenURI) public onlyOwner returns (uint256) {
         incrementTokenId();
         uint256 newTokenId = currentTokenId();
 
@@ -38,5 +39,5 @@ contract TNFTUpgradeable is Initializable, ERC721URIStorageUpgradeable, OwnableU
         return newTokenId;
     }
 
-    function _authorizeUpgrade(address newImplementation) onlyOwner internal override{}
+    function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 }

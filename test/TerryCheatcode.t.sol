@@ -74,7 +74,6 @@ contract TerryCheatCodeTest is Test {
         vm.terrySetMappingStorageAt(address(terryContract), 1, 2, bytes32(uint256(uint160(addr4))));
         assertEq(terryContract.getUToA(2), addr4);
 
-
         terryContract.setAToU(addr1, 3);
         terryContract.setAToU(addr2, 4);
         assertEq(uint256(vm.terryGetMappingStorageAt(address(terryContract), 2, uint256(uint160(addr1)))), 3);
@@ -85,8 +84,6 @@ contract TerryCheatCodeTest is Test {
         vm.terrySetMappingStorageAt(address(terryContract), 2, uint256(uint160(addr2)), bytes32(uint256(6)));
         assertEq(terryContract.aToU(addr2), 6);
 
-
-
         terryContract.setAToA(addr1, addr3);
         terryContract.setAToA(addr2, addr4);
         bytes32 getSlot3KeyAddr1 = vm.terryGetMappingStorageAt(address(terryContract), 3, uint256(uint160(addr1)));
@@ -94,9 +91,13 @@ contract TerryCheatCodeTest is Test {
         bytes32 getSlot3KeyAddr2 = vm.terryGetMappingStorageAt(address(terryContract), 3, uint256(uint160(addr2)));
         assertEq(address(uint160(uint256(getSlot3KeyAddr2))), addr4);
 
-        vm.terrySetMappingStorageAt(address(terryContract), 3, uint256(uint160(addr1)), bytes32(uint256(uint160(addr4))));
+        vm.terrySetMappingStorageAt(
+            address(terryContract), 3, uint256(uint160(addr1)), bytes32(uint256(uint160(addr4)))
+        );
         assertEq(terryContract.aToA(addr1), addr4);
-        vm.terrySetMappingStorageAt(address(terryContract), 3, uint256(uint160(addr2)), bytes32(uint256(uint160(addr3))));
+        vm.terrySetMappingStorageAt(
+            address(terryContract), 3, uint256(uint160(addr2)), bytes32(uint256(uint160(addr3)))
+        );
         assertEq(terryContract.aToA(addr2), addr3);
     }
 
