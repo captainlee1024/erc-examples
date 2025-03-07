@@ -4,6 +4,7 @@ pragma solidity ^0.8.13;
 import "forge-std/Test.sol";
 import "../src/InscriptionCloneFactory.sol";
 import "../src/Inscription.sol";
+import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 
 contract InscriptionCloneFactoryTest is Test{
     InscriptionCloneFactory factory;
@@ -38,6 +39,17 @@ contract InscriptionCloneFactoryTest is Test{
         assertEq(inscription.price(), 0.1 ether);
         assertEq(inscription.circulatingSupply(), 0);
     }
+
+    // 测试 deployInscription 只能初始化一次
+    function testDeployInscriptionInitTwice() public {
+        vm.prank(user);
+        address proxy = factory.deployInscription("TestToken", "TEST", 1000e18, 10e18, 0.1 ether);
+
+        Inscription inscription = Inscription(proxy);
+        vm.expectRevert(Initializable.InvalidInitialization.selector);
+        inscription.initialize("TestToken", "TEST", 1000e18, 10e18, 0.1 ether);
+    }
+
 
     // 测试 mintInscription 是否成功，并且费用是否按比例分账
     function testMintInscription() public {

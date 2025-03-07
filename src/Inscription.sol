@@ -3,8 +3,10 @@ pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 
-contract Inscription is ERC20Permit, Ownable{
+
+contract Inscription is ERC20Permit, Ownable, Initializable{
     // 单次发行量
     uint256 private _perMint;
     // 单个代币铸造费用
@@ -17,7 +19,9 @@ contract Inscription is ERC20Permit, Ownable{
         ERC20(name_, symbol_)
         ERC20Permit(name_)
         Ownable(msg.sender)
-    {}
+    {
+        _disableInitializers();
+    }
 
     function  sendEther(address payable recipient) external payable onlyOwner {
         require(address(this).balance >= msg.value, "Insufficient balance");
@@ -26,7 +30,7 @@ contract Inscription is ERC20Permit, Ownable{
     }
 
     // symbol_ 铭文名称
-    function initialize(string memory name_, string memory symbol_, uint256 totalSupply_, uint256 perMint_, uint256 price_) public {
+    function initialize(string memory name_, string memory symbol_, uint256 totalSupply_, uint256 perMint_, uint256 price_) initializer public {
         _name = name_;
         _symbol = symbol_;
         _totalSupply = totalSupply_;
