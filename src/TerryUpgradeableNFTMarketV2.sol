@@ -54,6 +54,11 @@ contract TerryUpgradeableNFTMarketV2 is Initializable, OwnableUpgradeable, EIP71
     bytes32 private constant PERMIT_TYPEHASH =
         keccak256("permitBuy(address owner, uint256 tokenId, address authorizedBuyer)");
 
+    // === upgrade
+    // === add function to list by permit
+    bytes32 private constant PERMIT_LIST_TYPEHASH =
+        keccak256("permitListWithPolicy(address owner, uint256 tokenId, uint256 price, Policy policy)");
+
     constructor() {
         _disableInitializers();
     }
@@ -84,6 +89,40 @@ contract TerryUpgradeableNFTMarketV2 is Initializable, OwnableUpgradeable, EIP71
             _nft.isApprovedForAll(msg.sender, address(this)) || _nft.getApproved(tokenId) == address(this),
             "Market must be approved to transfer NFT"
         );
+
+        incrementListingId();
+        uint256 listingId = currentListingId();
+
+        listings[listingId] = Listing({
+            listingId: listingId,
+            tokenId: tokenId,
+            seller: msg.sender,
+            price: price,
+            active: true,
+            policy: policy
+        });
+
+        emit NFTListed(listingId, tokenId, msg.sender, price);
+    }
+
+    function permitListWithPolicy(uint256 tokenId, uint256 price, Policy policy, uint8 v, bytes32 r, bytes32 s)
+        external
+    {
+        require(price > 0, "Price must be greater than zero");
+
+        address owner = _nft.ownerOf(tokenId);
+        require(
+            _nft.isApprovedForAll(owner, address(this)) || _nft.getApproved(tokenId) == address(this),
+            "Market must be approved to transfer NFT"
+        );
+
+        // 根据标准获取Hash
+        bytes32 structHash = keccak256(abi.encode(PERMIT_LIST_TYPEHASH, owner, tokenId, price, policy));
+        bytes32 hash = _hashTypedDataV4(structHash);
+        address signer = ECDSA.recover(hash, v, r, s);
+        if (signer != owner) {
+            revert ERC2612InvalidSigner(signer, owner);
+        }
 
         incrementListingId();
         uint256 listingId = currentListingId();

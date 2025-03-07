@@ -1,0 +1,25 @@
+第一次部署
+
+Script ran successfully.
+
+== Logs ==
+  erc20:  0xcd9BDe3fe5cA408E08Db15bfbAb430d6cafD2443
+  erc20 proxy:  0x8C56F0303e965Cc3ead7f6E3fEf0eb9418cc1D4E
+  nft:  0x36Db6a4e8C3b0138b3134Bd407C341729E58e1cc
+  nft proxy:  0xC8943120fa13403fcDad84cAb476074E7173268F
+  market:  0x3679243e59A448693069306c92d74E37f453d38f
+  market proxy:  0x1D540c2ee7A8a65e01895D8Edc273762306DbB4a
+
+第一次升级
+== Logs ==
+  1
+  2
+  marketV2 impl addr:  0xf26C98c8F3Fe6d132C73A94Eacb7366810A0aBDc
+  market proxy:  0x1D540c2ee7A8a65e01895D8Edc273762306DbB4a
+
+第二次升级(本次升级包含了permitList功能代码)
+== Logs ==
+  2
+  3
+  marketV2 impl addr:  0x8F1848F0E6fA0985E9C7De95f7a5DBf528C447B1
+  market proxy:  0x1D540c2ee7A8a65e01895D8Edc273762306DbB4a

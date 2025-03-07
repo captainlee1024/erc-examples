@@ -28,7 +28,7 @@ contract UUPSDeployScript is Script {
         console.log(TerryUpgradeableNFTMarket(proxyMarket).version());
 
         bytes memory marketV2UpgradeCallData =
-            abi.encodeWithSelector(TerryUpgradeableNFTMarketV2.upgradeVersion.selector, 2);
+            abi.encodeWithSelector(TerryUpgradeableNFTMarketV2.upgradeVersion.selector, 3);
         UUPSUpgradeable market = UUPSUpgradeable(proxyMarket);
         market.upgradeToAndCall(address(marketV2), marketV2UpgradeCallData);
         console.log(TerryUpgradeableNFTMarket(proxyMarket).version());
