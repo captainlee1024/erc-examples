@@ -37,7 +37,8 @@ jobs:
           forge build --sizes
         id: build
 
-#      - name: Run Forge tests
-#        run: |
+      - name: Run Forge tests
+        run: |
+          forge test --no-match-path TerryCheatcode -vvv
 #          forge test -vvv
-#        id: test
+        id: test
