@@ -14,7 +14,7 @@ contract TNFTUpgradeable is Initializable, ERC721URIStorageUpgradeable, OwnableU
         _tokenId++;
     }
 
-    function currentTokenId() internal returns (uint256) {
+    function currentTokenId() internal view returns (uint256) {
         return _tokenId;
     }
 

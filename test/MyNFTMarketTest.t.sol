@@ -148,7 +148,7 @@ contract NFTMarketTest is Test {
         assertEq(nft.ownerOf(1), buyer);
     }
 
-    function invariant_market_balance() public {
+    function invariant_market_balance() public view {
         assertEq(erc20.balanceOf(address(market)), 0);
     }
 }

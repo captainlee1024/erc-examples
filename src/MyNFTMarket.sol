@@ -66,6 +66,10 @@ contract NFTMarket {
         public
         returns (bool success)
     {
+        // TODO: fix
+        // Silence compiler warning
+        from;
+
         uint256 tokenId = abi.decode(data, (uint256));
         // uint256 tokenId = 1;
 
