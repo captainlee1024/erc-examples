@@ -21,3 +21,8 @@ docs/
 #
 testdata
 broadcast
+
+merkle_distributor/node_modules
+merkle_distributor/dist
+merkle_distributor/out
+merkle_distributor/build
