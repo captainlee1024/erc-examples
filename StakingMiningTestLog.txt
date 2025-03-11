@@ -1,0 +1,187 @@
+➜  ~/p*/op*/erc-examples ( master ❓) forge test --match-contract StakingMiningTest -vvvv
+
+[⠊] Compiling...
+[⠔] Compiling 2 files with Solc 0.8.28
+[⠑] Solc 0.8.28 finished in 480.49ms
+
+Ran 2 tests for test/StakingMining.t.sol:StakingMiningTest
+[PASS] testUnlockESRNT_SuccessAfter30Days() (gas: 234708)
+Traces:
+  [298650] StakingMiningTest::testUnlockESRNT_SuccessAfter30Days()
+    ├─ [0] VM::startPrank(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF])
+    │   └─ ← [Return]
+    ├─ [25296] TToken::approve(StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], 10000000000000000000 [1e19])
+    │   ├─ emit Approval(owner: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], spender: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], value: 10000000000000000000 [1e19])
+    │   └─ ← [Return] true
+    ├─ [0] VM::warp(1)
+    │   └─ ← [Return]
+    ├─ [64966] StakePool::stake(10000000000000000000 [1e19])
+    │   ├─ [14514] TToken::transferFrom(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], 10000000000000000000 [1e19])
+    │   │   ├─ emit Transfer(from: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], to: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], value: 10000000000000000000 [1e19])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4]) [staticcall]
+    │   └─ ← [Return] 100010000000000000000000 [1e23]
+    ├─ [0] VM::assertEq(100010000000000000000000 [1e23], 100010000000000000000000 [1e23]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::startPrank(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF])
+    │   └─ ← [Return]
+    ├─ [0] VM::warp(86401 [8.64e4])
+    │   └─ ← [Return]
+    ├─ [45970] StakePool::unStake()
+    │   ├─ [30523] TToken::transfer(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], 10000000000000000000 [1e19])
+    │   │   ├─ emit Transfer(from: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], to: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], value: 10000000000000000000 [1e19])
+    │   │   └─ ← [Return] true
+    │   ├─ [3823] TToken::transfer(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], 10000000000000000000 [1e19])
+    │   │   ├─ emit Transfer(from: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], to: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], value: 10000000000000000000 [1e19])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4]) [staticcall]
+    │   └─ ← [Return] 100000000000000000000000 [1e23]
+    ├─ [0] VM::assertEq(100000000000000000000000 [1e23], 100000000000000000000000 [1e23]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   └─ ← [Return] 10000000000000000000 [1e19]
+    ├─ [0] VM::assertEq(10000000000000000000 [1e19], 10000000000000000000 [1e19]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [2315] StakePool::activeESRNT(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   ├─ [851] TToken::balanceOf(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   │   └─ ← [Return] 10000000000000000000 [1e19]
+    │   └─ ← [Return] 10000000000000000000 [1e19]
+    ├─ [0] VM::assertEq(10000000000000000000 [1e19], 10000000000000000000 [1e19]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::startPrank(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF])
+    │   └─ ← [Return]
+    ├─ [25296] TToken::approve(StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], 10000000000000000000 [1e19])
+    │   ├─ emit Approval(owner: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], spender: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], value: 10000000000000000000 [1e19])
+    │   └─ ← [Return] true
+    ├─ [0] VM::warp(86401 [8.64e4])
+    │   └─ ← [Return]
+    ├─ [73982] StakePool::lockESRNT(10000000000000000000 [1e19])
+    │   ├─ [4914] TToken::transferFrom(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], 10000000000000000000 [1e19])
+    │   │   ├─ emit Transfer(from: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], to: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], value: 10000000000000000000 [1e19])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Return] 1
+    ├─ [2315] StakePool::activeESRNT(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   ├─ [851] TToken::balanceOf(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   │   └─ ← [Return] 0
+    │   └─ ← [Return] 0
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::warp(2678401 [2.678e6])
+    │   └─ ← [Return]
+    ├─ [14136] StakePool::unlockESRNT(1)
+    │   ├─ [9423] TToken::transfer(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], 10000000000000000000 [1e19])
+    │   │   ├─ emit Transfer(from: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], to: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], value: 10000000000000000000 [1e19])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   └─ ← [Return] 20000000000000000000 [2e19]
+    ├─ [0] VM::assertEq(20000000000000000000 [2e19], 20000000000000000000 [2e19]) [staticcall]
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+[PASS] testUnlockESRNT_SuccessBefore30Days() (gas: 258691)
+Traces:
+  [328629] StakingMiningTest::testUnlockESRNT_SuccessBefore30Days()
+    ├─ [0] VM::startPrank(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF])
+    │   └─ ← [Return]
+    ├─ [25296] TToken::approve(StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], 10000000000000000000 [1e19])
+    │   ├─ emit Approval(owner: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], spender: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], value: 10000000000000000000 [1e19])
+    │   └─ ← [Return] true
+    ├─ [0] VM::warp(1)
+    │   └─ ← [Return]
+    ├─ [64966] StakePool::stake(10000000000000000000 [1e19])
+    │   ├─ [14514] TToken::transferFrom(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], 10000000000000000000 [1e19])
+    │   │   ├─ emit Transfer(from: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], to: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], value: 10000000000000000000 [1e19])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4]) [staticcall]
+    │   └─ ← [Return] 100010000000000000000000 [1e23]
+    ├─ [0] VM::assertEq(100010000000000000000000 [1e23], 100010000000000000000000 [1e23]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::startPrank(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF])
+    │   └─ ← [Return]
+    ├─ [0] VM::warp(86401 [8.64e4])
+    │   └─ ← [Return]
+    ├─ [45970] StakePool::unStake()
+    │   ├─ [30523] TToken::transfer(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], 10000000000000000000 [1e19])
+    │   │   ├─ emit Transfer(from: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], to: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], value: 10000000000000000000 [1e19])
+    │   │   └─ ← [Return] true
+    │   ├─ [3823] TToken::transfer(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], 10000000000000000000 [1e19])
+    │   │   ├─ emit Transfer(from: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], to: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], value: 10000000000000000000 [1e19])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4]) [staticcall]
+    │   └─ ← [Return] 100000000000000000000000 [1e23]
+    ├─ [0] VM::assertEq(100000000000000000000000 [1e23], 100000000000000000000000 [1e23]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   └─ ← [Return] 10000000000000000000 [1e19]
+    ├─ [0] VM::assertEq(10000000000000000000 [1e19], 10000000000000000000 [1e19]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [2315] StakePool::activeESRNT(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   ├─ [851] TToken::balanceOf(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   │   └─ ← [Return] 10000000000000000000 [1e19]
+    │   └─ ← [Return] 10000000000000000000 [1e19]
+    ├─ [0] VM::assertEq(10000000000000000000 [1e19], 10000000000000000000 [1e19]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::startPrank(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF])
+    │   └─ ← [Return]
+    ├─ [25296] TToken::approve(StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], 10000000000000000000 [1e19])
+    │   ├─ emit Approval(owner: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], spender: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], value: 10000000000000000000 [1e19])
+    │   └─ ← [Return] true
+    ├─ [0] VM::warp(86401 [8.64e4])
+    │   └─ ← [Return]
+    ├─ [73982] StakePool::lockESRNT(10000000000000000000 [1e19])
+    │   ├─ [4914] TToken::transferFrom(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], 10000000000000000000 [1e19])
+    │   │   ├─ emit Transfer(from: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], to: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], value: 10000000000000000000 [1e19])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Return] 1
+    ├─ [2315] StakePool::activeESRNT(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   ├─ [851] TToken::balanceOf(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   │   └─ ← [Return] 0
+    │   └─ ← [Return] 0
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::warp(1382401 [1.382e6])
+    │   └─ ← [Return]
+    ├─ [44159] StakePool::unlockESRNT(1)
+    │   ├─ [28523] TToken::transfer(0x000000000000000000000000000000000000dEaD, 5000000000000000000 [5e18])
+    │   │   ├─ emit Transfer(from: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], to: 0x000000000000000000000000000000000000dEaD, value: 5000000000000000000 [5e18])
+    │   │   └─ ← [Return] true
+    │   ├─ [6623] TToken::transfer(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], 5000000000000000000 [5e18])
+    │   │   ├─ emit Transfer(from: StakePool: [0xe98A2A8953f1eD0352883BD53A7ec662DaddBcc4], to: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], value: 5000000000000000000 [5e18])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   └─ ← [Return] 15000000000000000000 [1.5e19]
+    ├─ [0] VM::assertEq(15000000000000000000 [1.5e19], 15000000000000000000 [1.5e19]) [staticcall]
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 2.75ms (1.01ms CPU time)
+
+Ran 1 test suite in 157.50ms (2.75ms CPU time): 2 tests passed, 0 failed, 0 skipped (2 total tests)
+➜  ~/p*/op*/erc-examples ( master ❓)
+
