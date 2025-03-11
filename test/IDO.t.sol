@@ -50,16 +50,10 @@ contract IDOTest is Test {
         // 发起IDO
         vm.startPrank(tokenTeam);
         // 授权拍卖的token量
-//        _erc20.approve(address(_ido), tokenPreEth * minFundAmount);
+        //        _erc20.approve(address(_ido), tokenPreEth * minFundAmount);
         _erc20.transfer(address(_ido), tokenPreEth * minFundAmount);
         deadline = block.timestamp + 30 days;
-        _ido.startIDO(
-            address(_erc20),
-            tokenPreEth,
-            minFundAmount,
-            maxFundAmount,
-            deadline
-        );
+        _ido.startIDO(address(_erc20), tokenPreEth, minFundAmount, maxFundAmount, deadline);
         vm.stopPrank();
 
         // 用户购买
@@ -108,15 +102,15 @@ contract IDOTest is Test {
         // token 总拍卖量
         uint256 totalPreSale = tokenPreEth * minFundAmount;
         // user1 得到token量
-        assertEq(_erc20.balanceOf(user1), totalPreSale * 10 ether/totalFund);
+        assertEq(_erc20.balanceOf(user1), totalPreSale * 10 ether / totalFund);
         // user2 得到token量
-        assertEq(_erc20.balanceOf(user2), totalPreSale * 20 ether/totalFund);
+        assertEq(_erc20.balanceOf(user2), totalPreSale * 20 ether / totalFund);
         // user3 得到token量
-        assertEq(_erc20.balanceOf(user3), totalPreSale * 20 ether/totalFund);
+        assertEq(_erc20.balanceOf(user3), totalPreSale * 20 ether / totalFund);
         // user4 得到token量
-        assertEq(_erc20.balanceOf(user4), totalPreSale * 50 ether/totalFund);
+        assertEq(_erc20.balanceOf(user4), totalPreSale * 50 ether / totalFund);
         // user5 得到token量
-        assertEq(_erc20.balanceOf(user5), totalPreSale * 100 ether/totalFund);
+        assertEq(_erc20.balanceOf(user5), totalPreSale * 100 ether / totalFund);
         // 项目方筹集到的金额
         assertEq(tokenTeam.balance, 200 ether);
     }
@@ -125,16 +119,10 @@ contract IDOTest is Test {
         // 发起IDO
         vm.startPrank(tokenTeam);
         // 授权拍卖的token量
-//        _erc20.approve(address(_ido), tokenPreEth * minFundAmount);
+        //        _erc20.approve(address(_ido), tokenPreEth * minFundAmount);
         _erc20.transfer(address(_ido), tokenPreEth * minFundAmount);
         deadline = block.timestamp + 30 days;
-        _ido.startIDO(
-            address(_erc20),
-            tokenPreEth,
-            minFundAmount,
-            maxFundAmount,
-            deadline
-        );
+        _ido.startIDO(address(_erc20), tokenPreEth, minFundAmount, maxFundAmount, deadline);
         vm.stopPrank();
 
         // 用户购买

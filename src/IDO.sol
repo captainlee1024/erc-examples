@@ -23,8 +23,15 @@ contract IDO {
     // 当前状态
     Status private _currentStatus;
     uint256 private _deadline; // 截止日期
-    enum Status { Idle, Active, Success, Failed }
+
+    enum Status {
+        Idle,
+        Active,
+        Success,
+        Failed
+    }
     // 用户投资eth金额
+
     mapping(address => uint256) _userEthAmount;
     address _tokenTeam; // IDO发起方账户，用于接收筹集的eth
 
@@ -38,7 +45,7 @@ contract IDO {
         uint256 deadline_
     ) external onlyIdle {
         uint256 preTotalSupply = minFundAmount_ * tokenPreEth_;
-//        require(IERC20(erc20_).allowance(msg.sender, address(this)) == preTotalSupply, "Not enough authorized tokens");
+        //        require(IERC20(erc20_).allowance(msg.sender, address(this)) == preTotalSupply, "Not enough authorized tokens");
         require(IERC20(erc20_).balanceOf(address(this)) == preTotalSupply, "Not enough authorized tokens");
 
         _erc20 = IERC20(erc20_);
@@ -56,7 +63,10 @@ contract IDO {
         // 单笔最小筹集金额
         require(msg.value >= 0.1 ether, "PreSale failed, A minimum of 0.1 eth is required");
         // 不超过筹集金额上限
-        require((msg.value + _totalFundEthAmount) <= _maxFundAmount, "Pre sale failed. The maximum fundraising limit has been exceeded.");
+        require(
+            (msg.value + _totalFundEthAmount) <= _maxFundAmount,
+            "Pre sale failed. The maximum fundraising limit has been exceeded."
+        );
 
         _userEthAmount[msg.sender] += msg.value;
         _totalFundEthAmount += msg.value;
@@ -74,7 +84,7 @@ contract IDO {
     function withdraw() external onlySuccess {
         uint256 toTeam = _totalFundEthAmount;
         _totalFundEthAmount = 0;
-        (bool result, ) = _tokenTeam.call{value: toTeam}("");
+        (bool result,) = _tokenTeam.call{value: toTeam}("");
         require(result, "withdraw failed");
     }
 
@@ -83,7 +93,7 @@ contract IDO {
         require(_userEthAmount[msg.sender] > 0, "no founds deposited");
         uint256 toUser = _userEthAmount[msg.sender];
         _userEthAmount[msg.sender] = 0;
-        (bool result, ) = msg.sender.call{value: toUser}("");
+        (bool result,) = msg.sender.call{value: toUser}("");
         require(result, "refund failed");
     }
 
@@ -93,7 +103,7 @@ contract IDO {
         require(result, "refundTokenToTeam failed");
     }
 
-    receive() payable external {}
+    receive() external payable {}
 
     modifier onlySuccess() {
         _advanceState();
@@ -101,7 +111,7 @@ contract IDO {
         _;
     }
 
-    modifier onlyFailed(){
+    modifier onlyFailed() {
         _advanceState();
         require(_currentStatus == Status.Failed, "Operation allowed only in Failed state");
         _;
