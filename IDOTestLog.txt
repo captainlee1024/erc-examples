@@ -1,0 +1,240 @@
+➜  ~/p*/op*/erc-examples ( master ❓) forge test --match-contract IDOTest -vvvv
+
+[⠊] Compiling...
+No files changed, compilation skipped
+
+Ran 2 tests for test/IDO.t.sol:IDOTest
+[PASS] test_fund_failed() (gas: 430256)
+Traces:
+  [543086] IDOTest::test_fund_failed()
+    ├─ [0] VM::startPrank(tokenTeam: [0x42F44bEB32E41d1e5dD07401Ee41Cc85bD1AE538])
+    │   └─ ← [Return]
+    ├─ [30523] TToken::transfer(IDO: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], 10000000000000000000000 [1e22])
+    │   ├─ emit Transfer(from: tokenTeam: [0x42F44bEB32E41d1e5dD07401Ee41Cc85bD1AE538], to: IDO: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], value: 10000000000000000000000 [1e22])
+    │   └─ ← [Return] true
+    ├─ [180528] IDO::startIDO(TToken: [0x4e5614d2A2587E9ccd39259385aa54A48Eb54Ab2], 100, 100000000000000000000 [1e20], 200000000000000000000 [2e20], 2592001 [2.592e6])
+    │   ├─ [851] TToken::balanceOf(IDO: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f]) [staticcall]
+    │   │   └─ ← [Return] 10000000000000000000000 [1e22]
+    │   └─ ← [Stop]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF])
+    │   └─ ← [Return]
+    ├─ [45915] IDO::presale{value: 10000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802])
+    │   └─ ← [Return]
+    ├─ [24015] IDO::presale{value: 10000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec])
+    │   └─ ← [Return]
+    ├─ [24015] IDO::presale{value: 10000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user4: [0x90561e5Cd8025FA6F52d849e8867C14A77C94BA0])
+    │   └─ ← [Return]
+    ├─ [24015] IDO::presale{value: 10000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user5: [0x22068447936722AcB3481F41eE8a0B7125526D55])
+    │   └─ ← [Return]
+    ├─ [24015] IDO::presale{value: 10000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF])
+    │   └─ ← [Return]
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  'Operation allowed only in Success state)
+    │   └─ ← [Return]
+    ├─ [1011] IDO::claim()
+    │   └─ ← [Revert] revert: Operation allowed only in Success state
+    ├─ [0] VM::warp(2592002 [2.592e6])
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF])
+    │   └─ ← [Return]
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  'Operation allowed only in Success state)
+    │   └─ ← [Return]
+    ├─ [1521] IDO::claim()
+    │   └─ ← [Revert] revert: Operation allowed only in Success state
+    ├─ [0] VM::prank(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF])
+    │   └─ ← [Return]
+    ├─ [8952] IDO::refund()
+    │   ├─ [0] user1::fallback{value: 10000000000000000000}()
+    │   │   └─ ← [Stop]
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802])
+    │   └─ ← [Return]
+    ├─ [8320] IDO::refund()
+    │   ├─ [0] user2::fallback{value: 10000000000000000000}()
+    │   │   └─ ← [Stop]
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec])
+    │   └─ ← [Return]
+    ├─ [8320] IDO::refund()
+    │   ├─ [0] user3::fallback{value: 10000000000000000000}()
+    │   │   └─ ← [Stop]
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user4: [0x90561e5Cd8025FA6F52d849e8867C14A77C94BA0])
+    │   └─ ← [Return]
+    ├─ [8320] IDO::refund()
+    │   ├─ [0] user4::fallback{value: 10000000000000000000}()
+    │   │   └─ ← [Stop]
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user5: [0x22068447936722AcB3481F41eE8a0B7125526D55])
+    │   └─ ← [Return]
+    ├─ [8320] IDO::refund()
+    │   ├─ [0] user5::fallback{value: 10000000000000000000}()
+    │   │   └─ ← [Stop]
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(tokenTeam: [0x42F44bEB32E41d1e5dD07401Ee41Cc85bD1AE538])
+    │   └─ ← [Return]
+    ├─ [6037] IDO::refundTokenToTeam()
+    │   ├─ [3823] TToken::transfer(tokenTeam: [0x42F44bEB32E41d1e5dD07401Ee41Cc85bD1AE538], 10000000000000000000000 [1e22])
+    │   │   ├─ emit Transfer(from: IDO: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], to: tokenTeam: [0x42F44bEB32E41d1e5dD07401Ee41Cc85bD1AE538], value: 10000000000000000000000 [1e22])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [2851] TToken::balanceOf(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::assertEq(100000000000000000000 [1e20], 100000000000000000000 [1e20]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [2851] TToken::balanceOf(user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::assertEq(100000000000000000000 [1e20], 100000000000000000000 [1e20]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [2851] TToken::balanceOf(user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::assertEq(100000000000000000000 [1e20], 100000000000000000000 [1e20]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [2851] TToken::balanceOf(user4: [0x90561e5Cd8025FA6F52d849e8867C14A77C94BA0]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::assertEq(100000000000000000000 [1e20], 100000000000000000000 [1e20]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [2851] TToken::balanceOf(user5: [0x22068447936722AcB3481F41eE8a0B7125526D55]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::assertEq(100000000000000000000 [1e20], 100000000000000000000 [1e20]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(tokenTeam: [0x42F44bEB32E41d1e5dD07401Ee41Cc85bD1AE538]) [staticcall]
+    │   └─ ← [Return] 10000000000000000000000000000 [1e28]
+    ├─ [0] VM::assertEq(10000000000000000000000000000 [1e28], 10000000000000000000000000000 [1e28]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+[PASS] test_fund_success() (gas: 497879)
+Traces:
+  [627614] IDOTest::test_fund_success()
+    ├─ [0] VM::startPrank(tokenTeam: [0x42F44bEB32E41d1e5dD07401Ee41Cc85bD1AE538])
+    │   └─ ← [Return]
+    ├─ [30523] TToken::transfer(IDO: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], 10000000000000000000000 [1e22])
+    │   ├─ emit Transfer(from: tokenTeam: [0x42F44bEB32E41d1e5dD07401Ee41Cc85bD1AE538], to: IDO: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], value: 10000000000000000000000 [1e22])
+    │   └─ ← [Return] true
+    ├─ [180528] IDO::startIDO(TToken: [0x4e5614d2A2587E9ccd39259385aa54A48Eb54Ab2], 100, 100000000000000000000 [1e20], 200000000000000000000 [2e20], 2592001 [2.592e6])
+    │   ├─ [851] TToken::balanceOf(IDO: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f]) [staticcall]
+    │   │   └─ ← [Return] 10000000000000000000000 [1e22]
+    │   └─ ← [Stop]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF])
+    │   └─ ← [Return]
+    ├─ [45915] IDO::presale{value: 10000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802])
+    │   └─ ← [Return]
+    ├─ [24015] IDO::presale{value: 20000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec])
+    │   └─ ← [Return]
+    ├─ [24015] IDO::presale{value: 20000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user4: [0x90561e5Cd8025FA6F52d849e8867C14A77C94BA0])
+    │   └─ ← [Return]
+    ├─ [24015] IDO::presale{value: 50000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user5: [0x22068447936722AcB3481F41eE8a0B7125526D55])
+    │   └─ ← [Return]
+    ├─ [24015] IDO::presale{value: 100000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF])
+    │   └─ ← [Return]
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  'Operation allowed only in Success state)
+    │   └─ ← [Return]
+    ├─ [1011] IDO::claim()
+    │   └─ ← [Revert] revert: Operation allowed only in Success state
+    ├─ [0] VM::warp(2592002 [2.592e6])
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF])
+    │   └─ ← [Return]
+    ├─ [28942] IDO::claim()
+    │   ├─ [25723] TToken::transfer(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], 500000000000000000000 [5e20])
+    │   │   ├─ emit Transfer(from: IDO: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], to: user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF], value: 500000000000000000000 [5e20])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802])
+    │   └─ ← [Return]
+    ├─ [28300] IDO::claim()
+    │   ├─ [25723] TToken::transfer(user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802], 1000000000000000000000 [1e21])
+    │   │   ├─ emit Transfer(from: IDO: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], to: user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802], value: 1000000000000000000000 [1e21])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec])
+    │   └─ ← [Return]
+    ├─ [28300] IDO::claim()
+    │   ├─ [25723] TToken::transfer(user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec], 1000000000000000000000 [1e21])
+    │   │   ├─ emit Transfer(from: IDO: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], to: user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec], value: 1000000000000000000000 [1e21])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user4: [0x90561e5Cd8025FA6F52d849e8867C14A77C94BA0])
+    │   └─ ← [Return]
+    ├─ [28300] IDO::claim()
+    │   ├─ [25723] TToken::transfer(user4: [0x90561e5Cd8025FA6F52d849e8867C14A77C94BA0], 2500000000000000000000 [2.5e21])
+    │   │   ├─ emit Transfer(from: IDO: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], to: user4: [0x90561e5Cd8025FA6F52d849e8867C14A77C94BA0], value: 2500000000000000000000 [2.5e21])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user5: [0x22068447936722AcB3481F41eE8a0B7125526D55])
+    │   └─ ← [Return]
+    ├─ [28300] IDO::claim()
+    │   ├─ [25723] TToken::transfer(user5: [0x22068447936722AcB3481F41eE8a0B7125526D55], 5000000000000000000000 [5e21])
+    │   │   ├─ emit Transfer(from: IDO: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], to: user5: [0x22068447936722AcB3481F41eE8a0B7125526D55], value: 5000000000000000000000 [5e21])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(tokenTeam: [0x42F44bEB32E41d1e5dD07401Ee41Cc85bD1AE538])
+    │   └─ ← [Return]
+    ├─ [10529] IDO::withdraw()
+    │   ├─ [0] tokenTeam::fallback{value: 200000000000000000000}()
+    │   │   └─ ← [Stop]
+    │   └─ ← [Stop]
+    ├─ [851] TToken::balanceOf(user1: [0x29E3b139f4393aDda86303fcdAa35F60Bb7092bF]) [staticcall]
+    │   └─ ← [Return] 500000000000000000000 [5e20]
+    ├─ [0] VM::assertEq(500000000000000000000 [5e20], 500000000000000000000 [5e20]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802]) [staticcall]
+    │   └─ ← [Return] 1000000000000000000000 [1e21]
+    ├─ [0] VM::assertEq(1000000000000000000000 [1e21], 1000000000000000000000 [1e21]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec]) [staticcall]
+    │   └─ ← [Return] 1000000000000000000000 [1e21]
+    ├─ [0] VM::assertEq(1000000000000000000000 [1e21], 1000000000000000000000 [1e21]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(user4: [0x90561e5Cd8025FA6F52d849e8867C14A77C94BA0]) [staticcall]
+    │   └─ ← [Return] 2500000000000000000000 [2.5e21]
+    ├─ [0] VM::assertEq(2500000000000000000000 [2.5e21], 2500000000000000000000 [2.5e21]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [851] TToken::balanceOf(user5: [0x22068447936722AcB3481F41eE8a0B7125526D55]) [staticcall]
+    │   └─ ← [Return] 5000000000000000000000 [5e21]
+    ├─ [0] VM::assertEq(5000000000000000000000 [5e21], 5000000000000000000000 [5e21]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::assertEq(200000000000000000000 [2e20], 200000000000000000000 [2e20]) [staticcall]
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 2.48ms (1.00ms CPU time)
+
+Ran 1 test suite in 185.65ms (2.48ms CPU time): 2 tests passed, 0 failed, 0 skipped (2 total tests)
+➜  ~/p*/op*/erc-examples ( master ❓)
