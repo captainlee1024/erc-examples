@@ -1,0 +1,36 @@
+➜  ~/p*/op*/erc-examples ( master ❓) forge test --match-contract MyWalletTest -vvvv
+
+[⠊] Compiling...
+[⠔] Compiling 1 files with Solc 0.8.28
+[⠒] Solc 0.8.28 finished in 429.85ms
+Compiler run successful!
+
+Ran 2 tests for test/MyWalletForTest.t.sol:MyWalletTest
+[PASS] testTransferOwernship_failed() (gas: 14192)
+Traces:
+  [14192] MyWalletTest::testTransferOwernship_failed()
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  Not authorized)
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(notOwner: [0x294A67e30833690E0c6413E59CAc1543790BE3A7])
+    │   └─ ← [Return]
+    ├─ [2875] MyWallet::transferOwernship(notOwner: [0x294A67e30833690E0c6413E59CAc1543790BE3A7])
+    │   └─ ← [Revert] revert: Not authorized
+    └─ ← [Stop]
+
+[PASS] testTransferOwernship_success() (gas: 20523)
+Traces:
+  [20523] MyWalletTest::testTransferOwernship_success()
+    ├─ [0] VM::prank(walletOwner: [0x8D40Ab934686db525FD02547272791eE9c3f3fA0])
+    │   └─ ← [Return]
+    ├─ [5682] MyWallet::transferOwernship(newWalletOwner: [0xd4467E176A549fB968a4b48bE1B7364Ed00e2D46])
+    │   └─ ← [Stop]
+    ├─ [530] MyWallet::owner() [staticcall]
+    │   └─ ← [Return] newWalletOwner: [0xd4467E176A549fB968a4b48bE1B7364Ed00e2D46]
+    ├─ [0] VM::assertEq(newWalletOwner: [0xd4467E176A549fB968a4b48bE1B7364Ed00e2D46], newWalletOwner: [0xd4467E176A549fB968a4b48bE1B7364Ed00e2D46]) [staticcall]
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 6.79ms (2.07ms CPU time)
+
+Ran 1 test suite in 138.60ms (6.79ms CPU time): 2 tests passed, 0 failed, 0 skipped (2 total tests)
+➜  ~/p*/op*/erc-examples ( master ❓)
