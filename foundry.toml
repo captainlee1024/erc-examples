@@ -1,9 +1,16 @@
 [profile.default]
+solc_version = '0.8.26'
+evm_version = 'cancun'
+optimizer = true
+optimizer-runs = 200
 src = "src"
 out = "out"
-libs = ["lib"]
+libs = ['lib']
+test = 'test'
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
 
 #[profile.dependencies]
 #"@openzeppelin/contracts" = "git+https://github.com/OpenZeppelin/openzeppelin-contracts.git"
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
