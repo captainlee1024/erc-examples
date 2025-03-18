@@ -15,3 +15,7 @@
 [submodule "lib/chainlink"]
 	path = lib/chainlink
 	url = https://github.com/smartcontractkit/chainlink
+[submodule "lib/uniswapv2-solc0.8"]
+	path = lib/uniswapv2-solc0.8
+	url = https://github.com/captainlee1024/uniswapv2-solc0.8
+	branch = support-foundry
