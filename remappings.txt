@@ -1,4 +1,5 @@
 @openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
 @openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/
 @chainlink/contracts/=lib/chainlink/contracts/
+@uniswapv2-solc0.8/contracts/=lib/uniswapv2-solc0.8/contracts/
 
