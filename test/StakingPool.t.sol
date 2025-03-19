@@ -148,19 +148,22 @@ contract StakingPoolTest is Test {
         vm.prank(user);
         assertEq(kkToken.balanceOf(user), 0);
         vm.prank(user);
-        vm.warp(41);
+        // 是设置时间不是设置区块用的
+        //        vm.warp(41);
         stakingPool.claim();
 
         vm.prank(user2);
         assertEq(kkToken.balanceOf(user2), 0);
         vm.prank(user2);
-        vm.warp(41);
+        // 是设置时间不是设置区块用的
+        //        vm.warp(41);
         stakingPool.claim();
 
         vm.prank(user3);
         assertEq(kkToken.balanceOf(user3), 0);
         vm.prank(user3);
-        vm.warp(41);
+        // 是设置时间不是设置区块用的
+        //        vm.warp(41);
         stakingPool.claim();
 
         // user1 reward = 1 * (10 * 10 * 1 + 10 * 10 * 1/2 + 10 * 10 * 1/4)
