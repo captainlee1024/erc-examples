@@ -1,0 +1,269 @@
+No files changed, compilation skipped
+
+Ran 10 tests for test/StakingPool.t.sol:StakingPoolTest
+[PASS] testBalanceOf() (gas: 115565)
+Traces:
+  [115565] StakingPoolTest::testBalanceOf()
+    ├─ [0] VM::startPrank(0x0000000000000000000000000000000000001234)
+    │   └─ ← [Return]
+    ├─ [96290] StakingPool::stake{value: 1000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [712] StakingPool::balanceOf(0x0000000000000000000000000000000000001234) [staticcall]
+    │   └─ ← [Return] 1000000000000000000 [1e18]
+    ├─ [0] VM::assertEq(1000000000000000000 [1e18], 1000000000000000000 [1e18], "BalanceOf should return staked amount") [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+[PASS] testClaim() (gas: 158730)
+Traces:
+  [158730] StakingPoolTest::testClaim()
+    ├─ [0] VM::startPrank(0x0000000000000000000000000000000000001234)
+    │   └─ ← [Return]
+    ├─ [96290] StakingPool::stake{value: 1000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::roll(11)
+    │   └─ ← [Return]
+    ├─ [2648] KKToken::balanceOf(0x0000000000000000000000000000000000001234) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [32445] StakingPool::claim()
+    │   ├─ [27960] KKToken::transfer(0x0000000000000000000000000000000000001234, 100000000000000000000 [1e20])
+    │   │   ├─ emit Transfer(from: StakingPool: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], to: 0x0000000000000000000000000000000000001234, value: 100000000000000000000 [1e20])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [648] KKToken::balanceOf(0x0000000000000000000000000000000000001234) [staticcall]
+    │   └─ ← [Return] 100000000000000000000 [1e20]
+    ├─ [0] VM::assertGt(100000000000000000000 [1e20], 0, "KKToken balance should increase after claim") [staticcall]
+    │   └─ ← [Return]
+    ├─ [712] StakingPool::balanceOf(0x0000000000000000000000000000000000001234) [staticcall]
+    │   └─ ← [Return] 1000000000000000000 [1e18]
+    ├─ [0] VM::assertEq(1000000000000000000 [1e18], 1000000000000000000 [1e18], "Stake amount should not change after claim") [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+[PASS] testClaimWithMoreUserStake() (gas: 433345)
+Traces:
+  [433345] StakingPoolTest::testClaimWithMoreUserStake()
+    ├─ [0] VM::roll(11)
+    │   └─ ← [Return]
+    ├─ [0] VM::startPrank(0x0000000000000000000000000000000000001234)
+    │   └─ ← [Return]
+    ├─ [103290] StakingPool::stake{value: 1000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::roll(21)
+    │   └─ ← [Return]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [0] VM::startPrank(user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802])
+    │   └─ ← [Return]
+    ├─ [90490] StakingPool::stake{value: 1000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::roll(31)
+    │   └─ ← [Return]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [0] VM::startPrank(user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec])
+    │   └─ ← [Return]
+    ├─ [90490] StakingPool::stake{value: 2000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::roll(41)
+    │   └─ ← [Return]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000001234)
+    │   └─ ← [Return]
+    ├─ [2648] KKToken::balanceOf(0x0000000000000000000000000000000000001234) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000001234)
+    │   └─ ← [Return]
+    ├─ [0] VM::warp(41)
+    │   └─ ← [Return]
+    ├─ [32445] StakingPool::claim()
+    │   ├─ [27960] KKToken::transfer(0x0000000000000000000000000000000000001234, 175000000000000000000 [1.75e20])
+    │   │   ├─ emit Transfer(from: StakingPool: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], to: 0x0000000000000000000000000000000000001234, value: 175000000000000000000 [1.75e20])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802])
+    │   └─ ← [Return]
+    ├─ [2648] KKToken::balanceOf(user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802])
+    │   └─ ← [Return]
+    ├─ [0] VM::warp(41)
+    │   └─ ← [Return]
+    ├─ [25645] StakingPool::claim()
+    │   ├─ [23160] KKToken::transfer(user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802], 75000000000000000000 [7.5e19])
+    │   │   ├─ emit Transfer(from: StakingPool: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], to: user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802], value: 75000000000000000000 [7.5e19])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::prank(user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec])
+    │   └─ ← [Return]
+    ├─ [2648] KKToken::balanceOf(user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec])
+    │   └─ ← [Return]
+    ├─ [0] VM::warp(41)
+    │   └─ ← [Return]
+    ├─ [25645] StakingPool::claim()
+    │   ├─ [23160] KKToken::transfer(user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec], 50000000000000000000 [5e19])
+    │   │   ├─ emit Transfer(from: StakingPool: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], to: user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec], value: 50000000000000000000 [5e19])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [648] KKToken::balanceOf(0x0000000000000000000000000000000000001234) [staticcall]
+    │   └─ ← [Return] 175000000000000000000 [1.75e20]
+    ├─ [0] VM::assertEq(175000000000000000000 [1.75e20], 175000000000000000000 [1.75e20]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [648] KKToken::balanceOf(user2: [0x537C8f3d3E18dF5517a58B3fB9D9143697996802]) [staticcall]
+    │   └─ ← [Return] 75000000000000000000 [7.5e19]
+    ├─ [0] VM::assertEq(75000000000000000000 [7.5e19], 75000000000000000000 [7.5e19]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [648] KKToken::balanceOf(user3: [0xc0A55e2205B289a967823662B841Bd67Aa362Aec]) [staticcall]
+    │   └─ ← [Return] 50000000000000000000 [5e19]
+    ├─ [0] VM::assertEq(50000000000000000000 [5e19], 50000000000000000000 [5e19]) [staticcall]
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+[PASS] testEarned() (gas: 118356)
+Traces:
+  [118356] StakingPoolTest::testEarned()
+    ├─ [0] VM::startPrank(0x0000000000000000000000000000000000001234)
+    │   └─ ← [Return]
+    ├─ [96290] StakingPool::stake{value: 1000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::roll(11)
+    │   └─ ← [Return]
+    ├─ [393] StakingPool::_preBlockReward() [staticcall]
+    │   └─ ← [Return] 10000000000000000000 [1e19]
+    ├─ [1819] StakingPool::earned(0x0000000000000000000000000000000000001234) [staticcall]
+    │   └─ ← [Return] 100000000000000000000 [1e20]
+    ├─ [0] VM::assertEq(100000000000000000000 [1e20], 100000000000000000000 [1e20], "Earned reward calculation incorrect") [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+[PASS] testReceive() (gas: 116890)
+Traces:
+  [116890] StakingPoolTest::testReceive()
+    ├─ [0] VM::startPrank(0x0000000000000000000000000000000000001234)
+    │   └─ ← [Return]
+    ├─ [96157] StakingPool::receive{value: 1000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [396] StakingPool::totalStaked() [staticcall]
+    │   └─ ← [Return] 1000000000000000000 [1e18]
+    ├─ [0] VM::assertEq(1000000000000000000 [1e18], 1000000000000000000 [1e18], "Total staked should increase via receive") [staticcall]
+    │   └─ ← [Return]
+    ├─ [712] StakingPool::balanceOf(0x0000000000000000000000000000000000001234) [staticcall]
+    │   └─ ← [Return] 1000000000000000000 [1e18]
+    ├─ [0] VM::assertEq(1000000000000000000 [1e18], 1000000000000000000 [1e18], "User balance should not increase via receive") [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+[PASS] testRevertStakeZero() (gas: 11006)
+Traces:
+  [11006] StakingPoolTest::testRevertStakeZero()
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000001234)
+    │   └─ ← [Return]
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  )stake amount must be greater than 1 ether)
+    │   └─ ← [Return]
+    ├─ [363] StakingPool::stake()
+    │   └─ ← [Revert] revert: stake amount must be greater than 1 ether
+    └─ ← [Stop]
+
+[PASS] testStake() (gas: 118673)
+Traces:
+  [118673] StakingPoolTest::testStake()
+    ├─ [0] VM::startPrank(0x0000000000000000000000000000000000001234)
+    │   └─ ← [Return]
+    ├─ [96290] StakingPool::stake{value: 1000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [396] StakingPool::totalStaked() [staticcall]
+    │   └─ ← [Return] 1000000000000000000 [1e18]
+    ├─ [0] VM::assertEq(1000000000000000000 [1e18], 1000000000000000000 [1e18], "Total staked should increase") [staticcall]
+    │   └─ ← [Return]
+    ├─ [712] StakingPool::balanceOf(0x0000000000000000000000000000000000001234) [staticcall]
+    │   └─ ← [Return] 1000000000000000000 [1e18]
+    ├─ [0] VM::assertEq(1000000000000000000 [1e18], 1000000000000000000 [1e18], "User balance should increase") [staticcall]
+    │   └─ ← [Return]
+    ├─ [305] StakingPool::_lastUpdateBlock() [staticcall]
+    │   └─ ← [Return] 1
+    ├─ [0] VM::assertEq(1, 1, "Last update block should be current block") [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+[PASS] testUnstake() (gas: 212622)
+Traces:
+  [212622] StakingPoolTest::testUnstake()
+    ├─ [0] VM::startPrank(0x0000000000000000000000000000000000001234)
+    │   └─ ← [Return]
+    ├─ [96290] StakingPool::stake{value: 2000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::roll(11)
+    │   └─ ← [Return]
+    ├─ [93169] StakingPool::unstake(1000000000000000000 [1e18])
+    │   ├─ [29960] KKToken::transfer(0x0000000000000000000000000000000000001234, 100000000000000000000 [1e20])
+    │   │   ├─ emit Transfer(from: StakingPool: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], to: 0x0000000000000000000000000000000000001234, value: 100000000000000000000 [1e20])
+    │   │   └─ ← [Return] true
+    │   ├─ [0] 0x0000000000000000000000000000000000001234::fallback{value: 1000000000000000000}()
+    │   │   └─ ← [Stop]
+    │   └─ ← [Stop]
+    ├─ [712] StakingPool::balanceOf(0x0000000000000000000000000000000000001234) [staticcall]
+    │   └─ ← [Return] 1000000000000000000 [1e18]
+    ├─ [0] VM::assertEq(1000000000000000000 [1e18], 1000000000000000000 [1e18], "User balance should decrease") [staticcall]
+    │   └─ ← [Return]
+    ├─ [396] StakingPool::totalStaked() [staticcall]
+    │   └─ ← [Return] 1000000000000000000 [1e18]
+    ├─ [0] VM::assertEq(1000000000000000000 [1e18], 1000000000000000000 [1e18], "Total staked should decrease") [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::assertEq(99000000000000000000 [9.9e19], 99000000000000000000 [9.9e19], "ETH should be returned to user") [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+[PASS] test_Revert_When_UnstakeMoreThanStaked() (gas: 115152)
+Traces:
+  [115152] StakingPoolTest::test_Revert_When_UnstakeMoreThanStaked()
+    ├─ [0] VM::startPrank(0x0000000000000000000000000000000000001234)
+    │   └─ ← [Return]
+    ├─ [96290] StakingPool::stake{value: 1000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  .unstake amount must be less than staked amount)
+    │   └─ ← [Return]
+    ├─ [683] StakingPool::unstake(2000000000000000000 [2e18])
+    │   └─ ← [Revert] revert: unstake amount must be less than staked amount
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+[PASS] test_Revert_When_UnstakeZero() (gas: 114857)
+Traces:
+  [114857] StakingPoolTest::test_Revert_When_UnstakeZero()
+    ├─ [0] VM::startPrank(0x0000000000000000000000000000000000001234)
+    │   └─ ← [Return]
+    ├─ [96290] StakingPool::stake{value: 1000000000000000000}()
+    │   └─ ← [Stop]
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  %unstake amount must be greater than 0)
+    │   └─ ← [Return]
+    ├─ [421] StakingPool::unstake(0)
+    │   └─ ← [Revert] revert: unstake amount must be greater than 0
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+Suite result: ok. 10 passed; 0 failed; 0 skipped; finished in 12.36ms (12.03ms CPU time)
+
+Ran 1 test suite in 141.25ms (12.36ms CPU time): 10 tests passed, 0 failed, 0 skipped (10 total tests)
