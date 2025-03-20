@@ -184,6 +184,38 @@ contract StakingPoolTest is Test {
         //        assertEq(stakingPool.balanceOf(user), stakeAmount + stakeAmount2, "Stake amount should not change after claim");
     }
 
+    function testClaimWithMultiStakeOneUser() public {
+        vm.startPrank(user);
+
+        // 质押 1 ETH
+        uint256 stakeAmount = 1 ether;
+        stakingPool.stake{value: stakeAmount}();
+
+        // 前进 10 个区块
+        vm.roll(block.number + 10);
+
+        // 再质押 1 ETH
+        stakingPool.stake{value: stakeAmount}();
+
+        // 再前进 10 个块
+        vm.roll(block.number + 10);
+
+        // 领取奖励
+        uint256 balanceBefore = kkToken.balanceOf(user);
+        assertEq(balanceBefore, 10 * 10 * 1e18, "KKToken balance should be 10 * 10 * 1e18 before claim");
+
+        stakingPool.claim();
+        uint256 balanceAfter = kkToken.balanceOf(user);
+
+        assertEq(balanceAfter, 2 * 10 * 10 * 1e18, "KKToken balance should be 10 * 10 * 1e18 before claim");
+
+        assertGt(balanceAfter, balanceBefore, "KKToken balance should increase after claim");
+        // 验证用户质押量未变
+        assertEq(stakingPool.balanceOf(user), stakeAmount * 2, "Stake amount should not change after claim");
+
+        vm.stopPrank();
+    }
+
     function testEarned() public {
         vm.startPrank(user);
 

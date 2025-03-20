@@ -54,7 +54,8 @@ contract StakingPool is IStaking {
      */
     function stake() external payable {
         require(msg.value >= 1 ether, "stake amount must be greater than 1 ether");
-
+        // 领取累计奖励
+        _claim(msg.sender);
         uint256 ethAmount = msg.value / 1e18;
         _totalStaked += ethAmount;
         _updateUserInfo(_userStakeInfo[msg.sender].amount + ethAmount);
