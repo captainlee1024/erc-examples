@@ -1,0 +1,199 @@
+➜  ~/p*/op*/erc-examples ( master ✔ ) forge test --mt testFlashSwap -vvvv
+[⠊] Compiling...
+No files changed, compilation skipped
+
+Ran 1 test for test/myDexFlashSwap.t.sol:MyDexFlashSwapTest
+[PASS] testFlashSwap() (gas: 204085)
+Logs:
+  ====================
+  user before tokenA:  0
+  user before tokenB: 0
+  PoolA before tokenA:  10000000000
+  PoolA before tokenB:  10000000000
+  PoolB before tokenA:  10000000000
+  PoolB before tokenB:  10000
+  total tokenA: 20000000000
+  total tokenB: 10000010000
+  ====================
+  user after tokenA:  0
+  user after tokenA:  98715701
+  PoolA after tokenA:  10100000000
+  PoolA after tokenA:  9901284197
+  PoolB after tokenA:  9900000000
+  PoolB after tokenA:  10102
+  total tokenA: 20000000000
+  total tokenB: 10000010000
+
+Traces:
+  [249485] MyDexFlashSwapTest::testFlashSwap()
+    ├─ [0] console::log("====================") [staticcall]
+    │   └─ ← [Stop]
+    ├─ [2559] TokenA::balanceOf(flashSwapOwner: [0xEFD786CBd2a052A286953c01D98d2e8075E84Ea9]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] console::log("user before tokenA: ", 0) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [2559] TokenB::balanceOf(flashSwapOwner: [0xEFD786CBd2a052A286953c01D98d2e8075E84Ea9]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] console::log("user before tokenB:", 0) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [2559] TokenA::balanceOf(UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB]) [staticcall]
+    │   └─ ← [Return] 10000000000 [1e10]
+    ├─ [0] console::log("PoolA before tokenA: ", 10000000000 [1e10]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [2559] TokenB::balanceOf(UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB]) [staticcall]
+    │   └─ ← [Return] 10000000000 [1e10]
+    ├─ [0] console::log("PoolA before tokenB: ", 10000000000 [1e10]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [2559] TokenA::balanceOf(UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5]) [staticcall]
+    │   └─ ← [Return] 10000000000 [1e10]
+    ├─ [0] console::log("PoolB before tokenA: ", 10000000000 [1e10]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [2559] TokenB::balanceOf(UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5]) [staticcall]
+    │   └─ ← [Return] 10000 [1e4]
+    ├─ [0] console::log("PoolB before tokenB: ", 10000 [1e4]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [559] TokenA::balanceOf(UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5]) [staticcall]
+    │   └─ ← [Return] 10000000000 [1e10]
+    ├─ [559] TokenA::balanceOf(UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB]) [staticcall]
+    │   └─ ← [Return] 10000000000 [1e10]
+    ├─ [559] TokenA::balanceOf(flashSwapOwner: [0xEFD786CBd2a052A286953c01D98d2e8075E84Ea9]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [559] TokenB::balanceOf(UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5]) [staticcall]
+    │   └─ ← [Return] 10000 [1e4]
+    ├─ [559] TokenB::balanceOf(UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB]) [staticcall]
+    │   └─ ← [Return] 10000000000 [1e10]
+    ├─ [559] TokenB::balanceOf(flashSwapOwner: [0xEFD786CBd2a052A286953c01D98d2e8075E84Ea9]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] console::log("total tokenA:", 20000000000 [2e10]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [0] console::log("total tokenB:", 10000010000 [1e10]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [0] VM::startPrank(flashSwapOwner: [0xEFD786CBd2a052A286953c01D98d2e8075E84Ea9])
+    │   └─ ← [Return]
+    ├─ [170826] MyDexFlashSwap::flashSwap(UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB], UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5], TokenA: [0x4A007a2AeD14ef04060734dDaE31b0E6d77b9407], 100000000 [1e8], TokenB: [0x2f54137304d19d0AeE07fEc182aEf3AD611ddbA1], 0)
+    │   ├─ [2448] UniswapV2Pair::token0() [staticcall]
+    │   │   └─ ← [Return] TokenB: [0x2f54137304d19d0AeE07fEc182aEf3AD611ddbA1]
+    │   ├─ [2380] UniswapV2Pair::token1() [staticcall]
+    │   │   └─ ← [Return] TokenA: [0x4A007a2AeD14ef04060734dDaE31b0E6d77b9407]
+    │   ├─ [158887] UniswapV2Pair::swap(0, 100000000 [1e8], MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765], 0x00000000000000000000000077ad45b8bb6f130bc00e1013612fa02adbf460db)
+    │   │   ├─ [27982] TokenA::transfer(MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765], 100000000 [1e8])
+    │   │   │   ├─ emit Transfer(from: UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5], to: MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765], value: 100000000 [1e8])
+    │   │   │   └─ ← [Return] true
+    │   │   ├─ [110261] MyDexFlashSwap::uniswapV2Call(MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765], 0, 100000000 [1e8], 0x00000000000000000000000077ad45b8bb6f130bc00e1013612fa02adbf460db)
+    │   │   │   ├─ [2448] UniswapV2Pair::token0() [staticcall]
+    │   │   │   │   └─ ← [Return] TokenB: [0x2f54137304d19d0AeE07fEc182aEf3AD611ddbA1]
+    │   │   │   ├─ [2380] UniswapV2Pair::token1() [staticcall]
+    │   │   │   │   └─ ← [Return] TokenA: [0x4A007a2AeD14ef04060734dDaE31b0E6d77b9407]
+    │   │   │   ├─ [559] TokenA::balanceOf(MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765]) [staticcall]
+    │   │   │   │   └─ ← [Return] 100000000 [1e8]
+    │   │   │   ├─ [2559] TokenB::balanceOf(MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765]) [staticcall]
+    │   │   │   │   └─ ← [Return] 0
+    │   │   │   ├─ [6082] TokenA::transfer(UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB], 100000000 [1e8])
+    │   │   │   │   ├─ emit Transfer(from: MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765], to: UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB], value: 100000000 [1e8])
+    │   │   │   │   └─ ← [Return] true
+    │   │   │   ├─ [2525] UniswapV2Pair::getReserves() [staticcall]
+    │   │   │   │   └─ ← [Return] 10000000000 [1e10], 10000000000 [1e10], 1
+    │   │   │   ├─ [448] UniswapV2Pair::token0() [staticcall]
+    │   │   │   │   └─ ← [Return] TokenB: [0x2f54137304d19d0AeE07fEc182aEf3AD611ddbA1]
+    │   │   │   ├─ [448] UniswapV2Pair::token0() [staticcall]
+    │   │   │   │   └─ ← [Return] TokenB: [0x2f54137304d19d0AeE07fEc182aEf3AD611ddbA1]
+    │   │   │   ├─ [380] UniswapV2Pair::token1() [staticcall]
+    │   │   │   │   └─ ← [Return] TokenA: [0x4A007a2AeD14ef04060734dDaE31b0E6d77b9407]
+    │   │   │   ├─ [44040] UniswapV2Pair::swap(98715803 [9.871e7], 0, MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765], 0x)
+    │   │   │   │   ├─ [25982] TokenB::transfer(MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765], 98715803 [9.871e7])
+    │   │   │   │   │   ├─ emit Transfer(from: UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB], to: MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765], value: 98715803 [9.871e7])
+    │   │   │   │   │   └─ ← [Return] true
+    │   │   │   │   ├─ [559] TokenB::balanceOf(UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB]) [staticcall]
+    │   │   │   │   │   └─ ← [Return] 9901284197 [9.901e9]
+    │   │   │   │   ├─ [559] TokenA::balanceOf(UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB]) [staticcall]
+    │   │   │   │   │   └─ ← [Return] 10100000000 [1.01e10]
+    │   │   │   │   ├─ emit Sync(reserve0: 9901284197 [9.901e9], reserve1: 10100000000 [1.01e10])
+    │   │   │   │   ├─ emit Swap(sender: MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765], amount0In: 0, amount1In: 100000000 [1e8], amount0Out: 98715803 [9.871e7], amount1Out: 0, to: MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765])
+    │   │   │   │   └─ ← [Stop]
+    │   │   │   ├─ [559] TokenA::balanceOf(MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765]) [staticcall]
+    │   │   │   │   └─ ← [Return] 0
+    │   │   │   ├─ [559] TokenB::balanceOf(MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765]) [staticcall]
+    │   │   │   │   └─ ← [Return] 98715803 [9.871e7]
+    │   │   │   ├─ [525] UniswapV2Pair::getReserves() [staticcall]
+    │   │   │   │   └─ ← [Return] 10000 [1e4], 10000000000 [1e10], 1
+    │   │   │   ├─ [448] UniswapV2Pair::token0() [staticcall]
+    │   │   │   │   └─ ← [Return] TokenB: [0x2f54137304d19d0AeE07fEc182aEf3AD611ddbA1]
+    │   │   │   ├─ [559] TokenB::balanceOf(MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765]) [staticcall]
+    │   │   │   │   └─ ← [Return] 98715803 [9.871e7]
+    │   │   │   ├─ [6082] TokenB::transfer(UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5], 102)
+    │   │   │   │   ├─ emit Transfer(from: MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765], to: UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5], value: 102)
+    │   │   │   │   └─ ← [Return] true
+    │   │   │   ├─ [559] TokenA::balanceOf(MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765]) [staticcall]
+    │   │   │   │   └─ ← [Return] 0
+    │   │   │   ├─ [559] TokenB::balanceOf(MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765]) [staticcall]
+    │   │   │   │   └─ ← [Return] 98715701 [9.871e7]
+    │   │   │   ├─ [559] TokenB::balanceOf(MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765]) [staticcall]
+    │   │   │   │   └─ ← [Return] 98715701 [9.871e7]
+    │   │   │   ├─ [559] TokenB::balanceOf(MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765]) [staticcall]
+    │   │   │   │   └─ ← [Return] 98715701 [9.871e7]
+    │   │   │   ├─ [23182] TokenB::transfer(flashSwapOwner: [0xEFD786CBd2a052A286953c01D98d2e8075E84Ea9], 98715701 [9.871e7])
+    │   │   │   │   ├─ emit Transfer(from: MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765], to: flashSwapOwner: [0xEFD786CBd2a052A286953c01D98d2e8075E84Ea9], value: 98715701 [9.871e7])
+    │   │   │   │   └─ ← [Return] true
+    │   │   │   └─ ← [Stop]
+    │   │   ├─ [559] TokenB::balanceOf(UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5]) [staticcall]
+    │   │   │   └─ ← [Return] 10102 [1.01e4]
+    │   │   ├─ [559] TokenA::balanceOf(UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5]) [staticcall]
+    │   │   │   └─ ← [Return] 9900000000 [9.9e9]
+    │   │   ├─ emit Sync(reserve0: 10102 [1.01e4], reserve1: 9900000000 [9.9e9])
+    │   │   ├─ emit Swap(sender: MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765], amount0In: 102, amount1In: 0, amount0Out: 0, amount1Out: 100000000 [1e8], to: MyDexFlashSwap: [0xb8749eAc664123b600511d592B64d43366787765])
+    │   │   └─ ← [Stop]
+    │   └─ ← [Stop]
+    ├─ [0] console::log("====================") [staticcall]
+    │   └─ ← [Stop]
+    ├─ [559] TokenA::balanceOf(flashSwapOwner: [0xEFD786CBd2a052A286953c01D98d2e8075E84Ea9]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] console::log("user after tokenA: ", 0) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [559] TokenB::balanceOf(flashSwapOwner: [0xEFD786CBd2a052A286953c01D98d2e8075E84Ea9]) [staticcall]
+    │   └─ ← [Return] 98715701 [9.871e7]
+    ├─ [0] console::log("user after tokenA: ", 98715701 [9.871e7]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [559] TokenA::balanceOf(UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB]) [staticcall]
+    │   └─ ← [Return] 10100000000 [1.01e10]
+    ├─ [0] console::log("PoolA after tokenA: ", 10100000000 [1.01e10]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [559] TokenB::balanceOf(UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB]) [staticcall]
+    │   └─ ← [Return] 9901284197 [9.901e9]
+    ├─ [0] console::log("PoolA after tokenA: ", 9901284197 [9.901e9]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [559] TokenA::balanceOf(UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5]) [staticcall]
+    │   └─ ← [Return] 9900000000 [9.9e9]
+    ├─ [0] console::log("PoolB after tokenA: ", 9900000000 [9.9e9]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [559] TokenB::balanceOf(UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5]) [staticcall]
+    │   └─ ← [Return] 10102 [1.01e4]
+    ├─ [0] console::log("PoolB after tokenA: ", 10102 [1.01e4]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [559] TokenA::balanceOf(UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5]) [staticcall]
+    │   └─ ← [Return] 9900000000 [9.9e9]
+    ├─ [559] TokenA::balanceOf(UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB]) [staticcall]
+    │   └─ ← [Return] 10100000000 [1.01e10]
+    ├─ [559] TokenA::balanceOf(flashSwapOwner: [0xEFD786CBd2a052A286953c01D98d2e8075E84Ea9]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [559] TokenB::balanceOf(UniswapV2Pair: [0x4c149AA6287df021F71A7e7cE599A881d605e8d5]) [staticcall]
+    │   └─ ← [Return] 10102 [1.01e4]
+    ├─ [559] TokenB::balanceOf(UniswapV2Pair: [0x77aD45b8bb6f130bC00E1013612fA02aDbf460DB]) [staticcall]
+    │   └─ ← [Return] 9901284197 [9.901e9]
+    ├─ [559] TokenB::balanceOf(flashSwapOwner: [0xEFD786CBd2a052A286953c01D98d2e8075E84Ea9]) [staticcall]
+    │   └─ ← [Return] 98715701 [9.871e7]
+    ├─ [0] console::log("total tokenA:", 20000000000 [2e10]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [0] console::log("total tokenB:", 10000010000 [1e10]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [0] VM::assertEq(20000000000 [2e10], 20000000000 [2e10]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::assertEq(10000010000 [1e10], 10000010000 [1e10]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 2.45ms (362.33µs CPU time)
+
+Ran 1 test suite in 148.88ms (2.45ms CPU time): 1 tests passed, 0 failed, 0 skipped (1 total tests)
+➜  ~/p*/op*/erc-examples ( master ✔ )
