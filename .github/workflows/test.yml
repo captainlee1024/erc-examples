@@ -39,6 +39,6 @@ jobs:
 
       - name: Run Forge tests
         run: |
-          forge test --no-match-path TerryCheatcode -vvv
+          forge test --no-match-path TerryCheatcode
 #          forge test -vvv
         id: test

@@ -9,7 +9,7 @@ import "@uniswapv2-solc0.8/contracts/UniswapV2Factory.sol";
 import "@uniswapv2-solc0.8/contracts/UniswapV2Router.sol";
 import "@uniswapv2-solc0.8/contracts/test/WETH9.sol";
 import "@uniswapv2-solc0.8/contracts/test/ERC20.sol";
-import {TokenA, TokenB} from "./flashSwapToken.sol";
+import {TokenA, TokenB} from "./FlashSwapToken.sol";
 
 contract MyDexFlashSwapTest is Test {
     MyDEX public dexA;
