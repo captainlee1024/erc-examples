@@ -3,7 +3,7 @@ pragma solidity ^0.8.13;
 
 import "forge-std/Vm.sol";
 import {Test, console} from "forge-std/Test.sol";
-import {MyDexFlashSwap} from "../src/flashSwap/MyDexFlashSwap.sol";
+import {MyDexFlashSwap} from "../src/flashswap/MyDexFlashSwap.sol";
 import {MyDEX} from "../src/dex/MyDEX.sol";
 import "@uniswapv2-solc0.8/contracts/UniswapV2Factory.sol";
 import "@uniswapv2-solc0.8/contracts/UniswapV2Router.sol";
