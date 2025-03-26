@@ -3,7 +3,6 @@ pragma solidity ^0.8.13;
 
 import {UniswapV2ERC20} from "@uniswapv2-solc0.8/contracts/UniswapV2ERC20.sol";
 import {UniswapV2Factory} from "@uniswapv2-solc0.8/contracts/UniswapV2Factory.sol";
-import {UniswapV2Pair} from "@uniswapv2-solc0.8/contracts/UniswapV2Pair.sol";
 import {UniswapV2Router} from "@uniswapv2-solc0.8/contracts/UniswapV2Router.sol";
 import {WETH9} from "@uniswapv2-solc0.8/contracts/test/WETH9.sol";
 

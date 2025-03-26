@@ -3,10 +3,8 @@ pragma solidity ^0.8.13;
 
 import {IUniswapV2Callee} from "@uniswapv2-solc0.8/contracts/interfaces/IUniswapV2Callee.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {IUniswapV2Factory} from "@uniswapv2-solc0.8/contracts/interfaces/IUniswapV2Factory.sol";
 import {IUniswapV2Pair} from "@uniswapv2-solc0.8/contracts/interfaces/IUniswapV2Pair.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {MyDEX} from "../dex/MyDEX.sol";
 
 // 假定场景
 // 两个UniswapV2的DEX: dexA和dexB, 他们分别有一个TokenA/TokenB的池子
