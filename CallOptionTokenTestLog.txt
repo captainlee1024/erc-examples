@@ -1,0 +1,163 @@
+➜  ~/p*/op*/erc-examples ( master ❓) forge test --mt test_exerciseAndexpireAndRedeem_success -vvvv
+
+[⠊] Compiling...
+No files changed, compilation skipped
+
+Ran 1 test for test/CallOption.t.sol:CallOptionTest
+[PASS] test_exerciseAndexpireAndRedeem_success() (gas: 1519027)
+Traces:
+  [1658327] CallOptionTest::test_exerciseAndexpireAndRedeem_success()
+    ├─ [0] VM::startPrank(_user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c])
+    │   └─ ← [Return]
+    ├─ [1291286] CallOptionFactory::createOption{value: 10000000000000000000}(3000, 1001, TToken: [0xB0b8004Ff612f734861BD0b60cf7a69684c3cd3c], "CallETHOptionToken", "CEOToken")
+    │   ├─ [1112893] → new CallOptionToken@0x630Cd456E25E572A4e60D1c0C47056121ca82f9b
+    │   │   ├─ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: CallOptionFactory: [0x1342Ca71E7a18D57c6599A57Ce465A45b0CF2746])
+    │   │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: _user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c], value: 1000000000000000000000 [1e21])
+    │   │   └─ ← [Return] 4424 bytes of code
+    │   ├─ [55] CallOptionToken::receive{value: 10000000000000000000}()
+    │   │   └─ ← [Stop]
+    │   ├─ emit OptionCreated(optionId: 1, issuer: _user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c], tokenAddress: CallOptionToken: [0x630Cd456E25E572A4e60D1c0C47056121ca82f9b], strikePrice: 3000, expiryDate: 1001, underlyingAmount: 10000000000000000000 [1e19])
+    │   └─ ← [Return] 1
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [1584] CallOptionFactory::getOptionInfo(1) [staticcall]
+    │   └─ ← [Return] OptionInfo({ issuer: 0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c, strikePrice: 3000, expiryDate: 1001, totalUnderlying: 10000000000000000000 [1e19], tokenAddress: 0x630Cd456E25E572A4e60D1c0C47056121ca82f9b })
+    ├─ [0] VM::prank(_user2: [0x91DD4Bde7FF38E079AD1E575757A6AA804C0991c])
+    │   └─ ← [Return]
+    ├─ [29960] TToken::transfer(_user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c], 100000000000000000000 [1e20])
+    │   ├─ emit Transfer(from: _user2: [0x91DD4Bde7FF38E079AD1E575757A6AA804C0991c], to: _user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c], value: 100000000000000000000 [1e20])
+    │   └─ ← [Return] true
+    ├─ [560] TToken::balanceOf(_user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c]) [staticcall]
+    │   └─ ← [Return] 100000000000000000000 [1e20]
+    ├─ [0] VM::assertEq(100000000000000000000 [1e20], 100000000000000000000 [1e20]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [560] TToken::balanceOf(_user2: [0x91DD4Bde7FF38E079AD1E575757A6AA804C0991c]) [staticcall]
+    │   └─ ← [Return] 99900000000000000000000 [9.99e22]
+    ├─ [0] VM::assertEq(99900000000000000000000 [9.99e22], 99900000000000000000000 [9.99e22]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(_user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c])
+    │   └─ ← [Return]
+    ├─ [25349] CallOptionToken::transfer(_user2: [0x91DD4Bde7FF38E079AD1E575757A6AA804C0991c], 100000000000000000000 [1e20])
+    │   ├─ emit Transfer(from: _user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c], to: _user2: [0x91DD4Bde7FF38E079AD1E575757A6AA804C0991c], value: 100000000000000000000 [1e20])
+    │   └─ ← [Return] true
+    ├─ [0] VM::assertEq(true, true) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(_user3: [0x6B22FE48f3AFFE3696bA51898f2EC8d41A5f6832])
+    │   └─ ← [Return]
+    ├─ [8060] TToken::transfer(_user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c], 400000000000000000000 [4e20])
+    │   ├─ emit Transfer(from: _user3: [0x6B22FE48f3AFFE3696bA51898f2EC8d41A5f6832], to: _user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c], value: 400000000000000000000 [4e20])
+    │   └─ ← [Return] true
+    ├─ [560] TToken::balanceOf(_user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c]) [staticcall]
+    │   └─ ← [Return] 500000000000000000000 [5e20]
+    ├─ [0] VM::assertEq(500000000000000000000 [5e20], 500000000000000000000 [5e20]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [560] TToken::balanceOf(_user3: [0x6B22FE48f3AFFE3696bA51898f2EC8d41A5f6832]) [staticcall]
+    │   └─ ← [Return] 99600000000000000000000 [9.96e22]
+    ├─ [0] VM::assertEq(99600000000000000000000 [9.96e22], 99600000000000000000000 [9.96e22]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(_user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c])
+    │   └─ ← [Return]
+    ├─ [25349] CallOptionToken::transfer(_user3: [0x6B22FE48f3AFFE3696bA51898f2EC8d41A5f6832], 400000000000000000000 [4e20])
+    │   ├─ emit Transfer(from: _user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c], to: _user3: [0x6B22FE48f3AFFE3696bA51898f2EC8d41A5f6832], value: 400000000000000000000 [4e20])
+    │   └─ ← [Return] true
+    ├─ [0] VM::assertEq(true, true) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::warp(10002 [1e4])
+    │   └─ ← [Return]
+    ├─ [0] VM::startPrank(_user2: [0x91DD4Bde7FF38E079AD1E575757A6AA804C0991c])
+    │   └─ ← [Return]
+    ├─ [24735] TToken::approve(CallOptionToken: [0x630Cd456E25E572A4e60D1c0C47056121ca82f9b], 3000000000000000000000 [3e21])
+    │   ├─ emit Approval(owner: _user2: [0x91DD4Bde7FF38E079AD1E575757A6AA804C0991c], spender: CallOptionToken: [0x630Cd456E25E572A4e60D1c0C47056121ca82f9b], value: 3000000000000000000000 [3e21])
+    │   └─ ← [Return] true
+    ├─ [572] CallOptionToken::balanceOf(_user2: [0x91DD4Bde7FF38E079AD1E575757A6AA804C0991c]) [staticcall]
+    │   └─ ← [Return] 100000000000000000000 [1e20]
+    ├─ [53116] CallOptionToken::exercise()
+    │   ├─ emit SETP(setp: 10)
+    │   ├─ emit SETP(setp: 1)
+    │   ├─ emit SETP(setp: 2)
+    │   ├─ [560] TToken::balanceOf(_user2: [0x91DD4Bde7FF38E079AD1E575757A6AA804C0991c]) [staticcall]
+    │   │   └─ ← [Return] 99900000000000000000000 [9.99e22]
+    │   ├─ emit SETP(setp: 3000000000000000000000 [3e21])
+    │   ├─ emit SETP(setp: 3)
+    │   ├─ emit Transfer(from: _user2: [0x91DD4Bde7FF38E079AD1E575757A6AA804C0991c], to: 0x0000000000000000000000000000000000000000, value: 100000000000000000000 [1e20])
+    │   ├─ emit SETP(setp: 4)
+    │   ├─ [4158] TToken::transferFrom(_user2: [0x91DD4Bde7FF38E079AD1E575757A6AA804C0991c], _user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c], 3000000000000000000000 [3e21])
+    │   │   ├─ emit Transfer(from: _user2: [0x91DD4Bde7FF38E079AD1E575757A6AA804C0991c], to: _user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c], value: 3000000000000000000000 [3e21])
+    │   │   └─ ← [Return] true
+    │   ├─ emit SETP(setp: 5)
+    │   ├─ [0] _user2::fallback{value: 1000000000000000000}()
+    │   │   └─ ← [Stop]
+    │   ├─ emit SETP(setp: 6)
+    │   └─ ← [Stop]
+    ├─ [560] TToken::balanceOf(_user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c]) [staticcall]
+    │   └─ ← [Return] 3500000000000000000000 [3.5e21]
+    ├─ [0] VM::assertEq(3500000000000000000000 [3.5e21], 3500000000000000000000 [3.5e21]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [560] TToken::balanceOf(_user2: [0x91DD4Bde7FF38E079AD1E575757A6AA804C0991c]) [staticcall]
+    │   └─ ← [Return] 96900000000000000000000 [9.69e22]
+    ├─ [0] VM::assertEq(96900000000000000000000 [9.69e22], 96900000000000000000000 [9.69e22]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::assertEq(1000000000000000000 [1e18], 1000000000000000000 [1e18]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [0] VM::startPrank(_user3: [0x6B22FE48f3AFFE3696bA51898f2EC8d41A5f6832])
+    │   └─ ← [Return]
+    ├─ [24735] TToken::approve(CallOptionToken: [0x630Cd456E25E572A4e60D1c0C47056121ca82f9b], 12000000000000000000000 [1.2e22])
+    │   ├─ emit Approval(owner: _user3: [0x6B22FE48f3AFFE3696bA51898f2EC8d41A5f6832], spender: CallOptionToken: [0x630Cd456E25E572A4e60D1c0C47056121ca82f9b], value: 12000000000000000000000 [1.2e22])
+    │   └─ ← [Return] true
+    ├─ [53116] CallOptionToken::exercise()
+    │   ├─ emit SETP(setp: 10)
+    │   ├─ emit SETP(setp: 1)
+    │   ├─ emit SETP(setp: 2)
+    │   ├─ [560] TToken::balanceOf(_user3: [0x6B22FE48f3AFFE3696bA51898f2EC8d41A5f6832]) [staticcall]
+    │   │   └─ ← [Return] 99600000000000000000000 [9.96e22]
+    │   ├─ emit SETP(setp: 12000000000000000000000 [1.2e22])
+    │   ├─ emit SETP(setp: 3)
+    │   ├─ emit Transfer(from: _user3: [0x6B22FE48f3AFFE3696bA51898f2EC8d41A5f6832], to: 0x0000000000000000000000000000000000000000, value: 400000000000000000000 [4e20])
+    │   ├─ emit SETP(setp: 4)
+    │   ├─ [4158] TToken::transferFrom(_user3: [0x6B22FE48f3AFFE3696bA51898f2EC8d41A5f6832], _user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c], 12000000000000000000000 [1.2e22])
+    │   │   ├─ emit Transfer(from: _user3: [0x6B22FE48f3AFFE3696bA51898f2EC8d41A5f6832], to: _user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c], value: 12000000000000000000000 [1.2e22])
+    │   │   └─ ← [Return] true
+    │   ├─ emit SETP(setp: 5)
+    │   ├─ [0] _user3::fallback{value: 4000000000000000000}()
+    │   │   └─ ← [Stop]
+    │   ├─ emit SETP(setp: 6)
+    │   └─ ← [Stop]
+    ├─ [560] TToken::balanceOf(_user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c]) [staticcall]
+    │   └─ ← [Return] 15500000000000000000000 [1.55e22]
+    ├─ [0] VM::assertEq(15500000000000000000000 [1.55e22], 15500000000000000000000 [1.55e22]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [560] TToken::balanceOf(_user3: [0x6B22FE48f3AFFE3696bA51898f2EC8d41A5f6832]) [staticcall]
+    │   └─ ← [Return] 87600000000000000000000 [8.76e22]
+    ├─ [0] VM::assertEq(87600000000000000000000 [8.76e22], 87600000000000000000000 [8.76e22]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::assertEq(4000000000000000000 [4e18], 4000000000000000000 [4e18]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [0] VM::startPrank(_user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c])
+    │   └─ ← [Return]
+    ├─ [572] CallOptionToken::balanceOf(_user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c]) [staticcall]
+    │   └─ ← [Return] 500000000000000000000 [5e20]
+    ├─ [383] CallOptionToken::_underlyingAmount() [staticcall]
+    │   └─ ← [Return] 5000000000000000000 [5e18]
+    ├─ [36365] CallOptionToken::expireAndRedeem()
+    │   ├─ emit Transfer(from: _user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c], to: 0x0000000000000000000000000000000000000000, value: 500000000000000000000 [5e20])
+    │   ├─ [0] _user1::fallback{value: 5000000000000000000}()
+    │   │   └─ ← [Stop]
+    │   └─ ← [Stop]
+    ├─ [560] TToken::balanceOf(_user1: [0x989CA6ca6D8908d3B3F4e8DFB484F62F5898411c]) [staticcall]
+    │   └─ ← [Return] 15500000000000000000000 [1.55e22]
+    ├─ [0] VM::assertEq(15500000000000000000000 [1.55e22], 15500000000000000000000 [1.55e22]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::assertEq(5000000000000000000 [5e18], 5000000000000000000 [5e18]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 1.82ms (537.29µs CPU time)
+
+Ran 1 test suite in 1.66s (1.82ms CPU time): 1 tests passed, 0 failed, 0 skipped (1 total tests)
+➜  ~/p*/op*/erc-examples ( master ❓) 
